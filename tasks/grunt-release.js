@@ -10,10 +10,11 @@
 var shell = require('shelljs');
 var semver = require('semver');
 var request = require('superagent');
+var milestone = require('./github-milestone.js');
 var Q = require('q');
 
-module.exports = function(grunt) {
-    grunt.registerTask('release', 'Bump version, git tag, git push, npm publish', function(type) {
+module.exports = function (grunt) {
+    grunt.registerTask('release', 'Bump version, git tag, git push, npm publish', function (type) {
 
         function setup(file, type) {
             var pkg = grunt.file.readJSON(file);
@@ -31,7 +32,7 @@ module.exports = function(grunt) {
 
             // Check if options.additionalFiles is a single file
             if (typeof options.additionalFiles === 'string') {
-                files = options.additionalFiles.split(',').map(function(value) {
+                files = options.additionalFiles.split(',').map(function (value) {
                     return value.trim();
                 });
 
@@ -40,7 +41,7 @@ module.exports = function(grunt) {
             }
 
             if (typeof options.updateVars === 'string') {
-                vars = options.updateVars.split(',').map(function(value) {
+                vars = options.updateVars.split(',').map(function (value) {
                     return value.trim();
                 });
 
@@ -65,7 +66,7 @@ module.exports = function(grunt) {
         var options = grunt.util._.extend({
             bump: true,
             changelog: false, // Update changelog file
-
+            changelogFromGithub: false, //Get github issues
             // Text which is inserted into change log
             changelogText: '### <%= version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n',
 
@@ -160,12 +161,44 @@ module.exports = function(grunt) {
 
             config.files.push(filename);
 
-            return Q.fcall(function() {
-                var changelogText = grunt.template.process(options.changelogText, templateOptions);
-                var changelogContent = changelogText + grunt.file.read(filename);
+            return Q.fcall(function () {
+                var deferred = Q.defer();
+                if (!options.changelogFromGithub) {
 
-                grunt.file.write(filename, changelogContent);
-                grunt.log.ok('Changelog ' + filename + ' updated');
+                    var changelogText = grunt.template.process(options.changelogText, templateOptions);
+                    var changelogPreviousContent = grunt.file.read(filename);
+                    var changelogContent = changelogText;
+
+                    if (changelogPreviousContent.indexOf(changelogText) === -1)
+                        grunt.file.write(filename, changelogContent);
+
+                    grunt.log.ok('Changelog ' + filename + ' updated');
+                    deferred.resolve();
+
+                } else {
+
+                    var repo = options.github.repo.split('/');
+
+                    milestone.updateChangelog(repo[0], repo[1], 'v' + config.newVersion, function (newLines) {
+                        if (newLines) {
+                            var changelogPreviousContent = grunt.file.read(filename);
+                            var changelogContent = newLines + grunt.file.read(filename);
+
+                            options.changelogContent = newLines;
+
+                            if (changelogPreviousContent.indexOf(newLines) === -1)
+                                grunt.file.write(filename, changelogContent);
+
+                            grunt.log.ok('Changelog ' + filename + ' updated');
+                            deferred.resolve();
+                        } else {
+                            deferred.reject(new Error('Not found milestone in github with title: ' + config.newVersion));
+                        }
+                    }, function (error) {
+                        deferred.reject(error);
+                    });
+                }
+                return deferred.promise;
             });
         }
 
@@ -179,7 +212,7 @@ module.exports = function(grunt) {
                 commitMessage = [commitMessage];
             }
 
-            var message = commitMessage.map(function(el) {
+            var message = commitMessage.map(function (el) {
                 return '-m "' + grunt.template.process(el, templateOptions) + '"';
             }).join(' ');
 
@@ -215,7 +248,8 @@ module.exports = function(grunt) {
 
         function bump() {
             var i, file, pkg, promise, variable,
-                promises = [], configProp, fullProp;
+                promises = [],
+                configProp, fullProp;
 
             if (config.vars.length > 0) {
                 for (i = 0; i < config.vars.length; i++) {
@@ -234,8 +268,8 @@ module.exports = function(grunt) {
 
             for (i = 0; i < config.files.length; i++) {
                 file = config.files[i];
-                promise = (function(file) {
-                    return Q.fcall(function() {
+                promise = (function (file) {
+                    return Q.fcall(function () {
                         pkg = grunt.file.readJSON(file);
                         pkg.version = config.newVersion;
                         grunt.file.write(file, JSON.stringify(pkg, null, indentation) + '\n');
@@ -290,9 +324,10 @@ module.exports = function(grunt) {
                 .send({
                     'tag_name': tagName,
                     name: tagMessage,
+                    body: options.changelogContent + 'See [CHANGELOG.md](https://github.com/' + options.github.repo + '/blob/master/CHANGELOG.md) for details.',
                     prerelease: type === 'prerelease'
                 })
-                .end(function(err, res) {
+                .end(function (err, res) {
                     if (res && res.statusCode === 201) {
                         success();
                     } else {
@@ -312,19 +347,18 @@ module.exports = function(grunt) {
             if (Array.isArray(tasks) && tasks.length) {
                 grunt.log.ok('running ' + taskName + ' ');
 
-				if(flags.length) {
-                	grunt.log.ok('-> current flags: ' + flags);
+                if (flags.length) {
+                    grunt.log.ok('-> current flags: ' + flags);
                 }
 
                 if (!nowrite) {
                     for (var i = 0; i < tasks.length; i++) {
                         for (var i = 0; i < tasks.length; i++) {
-                        	if(typeof tasks[i] === 'string' || !tasks[i].preserveFlags){
-                            	msg = '-> ' + tasks[i] + (flags.length ? ' (ignoring current flags)' : '');
+                            if (typeof tasks[i] === 'string' || !tasks[i].preserveFlags) {
+                                msg = '-> ' + tasks[i] + (flags.length ? ' (ignoring current flags)' : '');
                                 promises.push(run('grunt ' + tasks[i], msg));
-                            }
-                            else if (tasks[i].preserveFlags){
-                            	promises.push(run('grunt ' + tasks[i].name + ' ' + flags, '-> ' + tasks[i].name + ' ' + flags));
+                            } else if (tasks[i].preserveFlags) {
+                                promises.push(run('grunt ' + tasks[i].name + ' ' + flags, '-> ' + tasks[i].name + ' ' + flags));
                             }
                         }
                     }
@@ -348,7 +382,7 @@ module.exports = function(grunt) {
             .then(ifEnabled('npm', publish))
             .then(ifEnabled('github', githubRelease))
             .then(ifEnabled('afterRelease', runTasks('afterRelease')))
-            .catch(function(msg) {
+            .catch(function (msg) {
                 grunt.fail.warn(msg || 'release failed');
             })
             .finally(done);

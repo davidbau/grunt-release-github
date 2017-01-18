@@ -1,8 +1,8 @@
-# grunt-release
+# grunt-release-github
+
+> FORKED from [grunt-release](https://github.com/geddski/grunt-release)
 
 [![Build Status](https://travis-ci.org/geddski/grunt-release.svg?branch=master)](https://travis-ci.org/geddski/grunt-release)
-[![Dependency Status](https://david-dm.org/geddski/grunt-release.svg)](https://david-dm.org/geddski/grunt-release)
-[![devDependency Status](https://david-dm.org/geddski/grunt-release/dev-status.svg)](https://david-dm.org/geddski/grunt-release#info=devDependencies)
 
 [Grunt](http://gruntjs.com) plugin for automating all the release steps of your node lib or bower component, with optional publishing to npm.
 
@@ -143,6 +143,7 @@ The following are all the release steps, you can disable any you need to:
       bump: false, //default: true
       changelog: true, //default: false
       changelogText: '<%= version %>\n', //default: '### <%= version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n'
+	  changelogFromGithub: true, //default false
       file: 'component.json', //default: package.json
       add: false, //default: true
       commit: false, //default: true
