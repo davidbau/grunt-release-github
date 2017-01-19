@@ -154,6 +154,7 @@ The following are all the release steps, you can disable any you need to:
       npmtag: true, //default: no tag
       indentation: '\t', //default: '  ' (two spaces)
       folder: 'folder/to/publish/to/npm', //default project root
+	  githubReleaseBody: 'RELEASE <%= version %>' //default:  'version <%= version %>'
       tagName: 'some-tag-<%= version %>', //default: '<%= version %>'
       commitMessage: 'check out my release <%= version %>', //default: 'release <%= version %>'
       tagMessage: 'tagging version <%= version %>', //default: 'Version <%= version %>',
