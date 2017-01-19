@@ -81,7 +81,7 @@ module.exports = function (grunt) {
             commit: true,
 
             // Text which is inserted into release body
-            githubReleaseBody: 'version <%= version %>'
+            githubReleaseBody: 'version <%= version %>',
             tag: true,
             push: true,
             pushTags: true,
@@ -171,7 +171,7 @@ module.exports = function (grunt) {
 
                     var changelogText = grunt.template.process(options.changelogText, templateOptions);
                     var changelogPreviousContent = grunt.file.read(filename);
-                    var changelogContent = changelogText;
+                    var changelogContent = changelogText + changelogPreviousContent;
 
                     if (changelogPreviousContent.indexOf(changelogText) === -1)
                         grunt.file.write(filename, changelogContent);
