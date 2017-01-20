@@ -24,15 +24,15 @@ module.exports.updateChangelog = function (user, repository, version, callback) 
             'User-Agent': 'request'
         },
         json: true
-    }, (err, res, body) => {
+    }, function (err, res, body) {
         logger.debug('receiving request.');
         if (!err && res.statusCode === 200) {
             //logger.debug(body); // Show the HTML for the Google homepage.
             logger.debug('200 OK.');
             var milestones = body;
             logger.debug('getting issues.');
-            promise.each(milestones, (milestone) => {
-                return new promise((resolve, reject) => {
+            promise.each(milestones, function (milestone) {
+                return new promise(function (resolve, reject) {
                     //do request for issues
                     var issuesUrl = "https://api.github.com/repos/" + user + "/" + repository + "/issues?state=all&milestone=" + milestone.number;
                     logger.debug('getting issues from url: \n' + issuesUrl);
@@ -47,7 +47,7 @@ module.exports.updateChangelog = function (user, repository, version, callback) 
                             'User-Agent': 'request'
                         },
                         json: true
-                    }, (err, res, body) => {
+                    }, function (err, res, body) {
                         logger.debug('receiving request.');
                         if (!err && res.statusCode === 200) {
                             logger.debug('200 OK.');
@@ -71,11 +71,11 @@ module.exports.updateChangelog = function (user, repository, version, callback) 
                 // }, (error) => {
                 //     //one milestone error
                 // })
-            }).then((success) => {
+            }).then(function (success) {
                 //all milestones success
                 logger.debug('All milestones has been requested successfully.');
                 logger.debug('Filtering by current milestone. ' + version);
-                var currentMilestone = milestones.filter((element) => {
+                var currentMilestone = milestones.filter(function (element) {
                     return element.title === version;
                 });
 
@@ -90,7 +90,7 @@ module.exports.updateChangelog = function (user, repository, version, callback) 
                     var now = new Date();
                     var stringChangelog = "### " + milestone.title + ' - ' + now.getUTCFullYear() + '-' + now.getUTCMonth() + 1 + '-' + now.getUTCDate() + '\n\n';
 
-                    milestone.issues.forEach((element) => {
+                    milestone.issues.forEach(function (element) {
                         stringChangelog += '- [#' + element.number + '](' + element.html_url + ') - ' + element.title + '\n\n';
                     });
                     //logger.debug(stringChangelog);
@@ -98,7 +98,7 @@ module.exports.updateChangelog = function (user, repository, version, callback) 
                     logger.debug('Resolving promise');
                     callback(stringChangelog);
                 }
-            }, (error) => {
+            }, function (error) {
                 //global errors
                 logger.debug('Some error has ocurred ' + error.toString());
                 callback(error);
