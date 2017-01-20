@@ -14,12 +14,15 @@ exports.release = {
     updateChangelog: function (test) {
         var credentials = grunt.file.readJSON('test/fixtures/credentials.json');
 
-        milestone.updateChangelog(credentials.user, credentials.repository, credentials.version, function (changelogText) {
-            var actual = grunt.file.read('test/fixtures/_CHANGELOG_GITHUB.md');
-            changelogText += actual;
-            grunt.file.write('test/fixtures/_CHANGELOG_GITHUB.md', changelogText);
+        milestone.updateChangelog(credentials.user || process.env.USER,
+            credentials.repository || process.env.REPOSITORY,
+            credentials.version || process.env.VERSION,
+            function (changelogText) {
+                var actual = grunt.file.read('test/fixtures/_CHANGELOG_GITHUB.md');
+                changelogText += actual;
+                grunt.file.write('test/fixtures/_CHANGELOG_GITHUB.md', changelogText);
 
-            compareFiles(test, 'CHANGELOG_GITHUB.md', 'should append github milestone issues');
-        });
+                compareFiles(test, 'CHANGELOG_GITHUB.md', 'should append github milestone issues');
+            });
     }
 };
