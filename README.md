@@ -2,7 +2,7 @@
 
 > FORKED from [grunt-release](https://github.com/geddski/grunt-release)
 
-[![Build Status](https://travis-ci.org/geddski/grunt-release.svg?branch=master)](https://travis-ci.org/geddski/grunt-release)
+[![Build Status](https://travis-ci.org/dani8art/grunt-release-github.svg?branch=master)](https://travis-ci.org/dani8art/grunt-release-github)
 
 [Grunt](http://gruntjs.com) plugin for automating all the release steps of your node lib or bower component, with optional publishing to npm.
 
