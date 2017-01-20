@@ -1,8 +1,8 @@
+'use strict';
+
 module.exports = function (grunt) {
-    'use strict';
 
     grunt.initConfig({
-
         clean: {
             test: 'test/fixtures/_*.{json,md}'
         },
@@ -11,20 +11,10 @@ module.exports = function (grunt) {
         },
         release: {
             options: {
-                bump: true,
-                file: 'package.json',
-                changelog: 'CHANGELOG.md',
-                changelogText: '### <%= version %> - ' + grunt.template.today('yyyy-mm-dd') + '\n',
-                commitMessage: 'v<%= version %>',
-                add: true,
-                commit: true,
-                tag: true,
-                push: true,
-                pushTags: true,
-                npm: true,
+                changelogFromGithub: true,
                 npmtag: false,
                 github: {
-                    repo: 'geddski/grunt-release',
+                    repo: 'dani8art/grunt-release-github',
                     accessTokenVar: 'GITHUB_ACCESS_TOKEN'
                 }
             }
@@ -98,6 +88,9 @@ module.exports = function (grunt) {
                 }, {
                     from: 'test/fixtures/CHANGELOG.md',
                     dest: 'test/fixtures/_CHANGELOG.md'
+                }, {
+                    from: 'test/fixtures/CHANGELOG.md',
+                    dest: 'test/fixtures/_CHANGELOG_GITHUB.md'
                 }, {
                     from: 'test/fixtures/bower.json',
                     dest: 'test/fixtures/_bower-absolute.json'
