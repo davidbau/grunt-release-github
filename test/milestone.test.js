@@ -12,8 +12,12 @@ function compareFiles(test, filename, description) {
 
 exports.release = {
     updateChangelog: function (test) {
-        var credentials = grunt.file.readJSON('test/fixtures/credentials.json');
-
+        var credentials = null;
+        try {
+            grunt.file.readJSON('test/fixtures/credentials.json');
+        } catch (e) {
+            credentials = {};
+        }
         milestone.updateChangelog(credentials.user || process.env.USER,
             credentials.repository || process.env.REPOSITORY,
             credentials.version || process.env.VERSION,
