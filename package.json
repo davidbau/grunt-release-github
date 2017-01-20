@@ -4,14 +4,14 @@
     "description": "Release a new version of your Node-based project",
     "main": "Gruntfile.js",
     "scripts": {
-        "test": "./node_modules/.bin/mocha --reporter spec --require test/bootstrap/node test/*.test.js test/**/*.test.js"
+        "test": "grunt test"
     },
     "engines": {
         "node": ">=0.10"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/dani8art/grunt-release.git"
+        "url": "https://github.com/dani8art/grunt-release-github.git"
     },
     "keywords": [
         "gruntplugin",
