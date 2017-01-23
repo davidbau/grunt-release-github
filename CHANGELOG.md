@@ -1,3 +1,23 @@
+### v1.0.1 - 2017-01-23
+
+- [#16](https://github.com/dani8art/grunt-release-github/issues/16) - Fix grunt to the correct version
+
+- [#13](https://github.com/dani8art/grunt-release-github/pull/13) - added badget
+
+- [#11](https://github.com/dani8art/grunt-release-github/pull/11) - Added tests for new features #4
+
+- [#6](https://github.com/dani8art/grunt-release-github/issues/6) - Change repository url on package.json 
+
+- [#5](https://github.com/dani8art/grunt-release-github/issues/5) - Add Travis CI
+
+- [#4](https://github.com/dani8art/grunt-release-github/issues/4) - Add mocha and chai
+
+- [#3](https://github.com/dani8art/grunt-release-github/issues/3) - Update Gruntfile.js to use grunt-release-github
+
+- [#2](https://github.com/dani8art/grunt-release-github/issues/2) - Use grunt.config.get instead of grunt.file.read
+
+- [#1](https://github.com/dani8art/grunt-release-github/issues/1) - Add support to custom github release body message
+
 ### v1.0.0 - 2017-01-23
 
 - [#16](https://github.com/dani8art/grunt-release-github/issues/16) - Fix grunt to the correct version
