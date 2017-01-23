@@ -1,6 +1,6 @@
 {
   "name": "grunt-release-github",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Release a new version of your Node-based project",
   "main": "Gruntfile.js",
   "scripts": {
