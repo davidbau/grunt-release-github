@@ -1,3 +1,9 @@
+### v1.0.3 - 2017-01-23
+
+- [#23](https://github.com/dani8art/grunt-release-github/issues/23) - declare functions and object in correct order.
+
+- [#22](https://github.com/dani8art/grunt-release-github/issues/22) - add see Changelog.md for details on Gruntfile.js
+
 ### v1.0.2 - 2017-01-23
 
 - [#19](https://github.com/dani8art/grunt-release-github/issues/19) - Throw error if GITHUB_ACCESS_TOKEN is empty
