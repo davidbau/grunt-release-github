@@ -1,20 +1,10 @@
 'use strict';
 
-var grunt = require('grunt');
+var grunt = require('grunt'),
+    utils = require('./utils/testsutils.js');
 
-function compareFiles(test, filename, description) {
-    var actual = grunt.file.read('test/fixtures/_' + filename);
-    var expected = grunt.file.read('test/expected/' + filename);
-    test.strictEqual(actual, expected, description);
-    test.done();
-}
-
-function compareFilesJSON(test, filename, description) {
-    var actual = grunt.file.readJSON('test/fixtures/_' + filename);
-    var expected = grunt.file.readJSON('test/expected/' + filename);
-    test.deepEqual(actual, expected, description);
-    test.done();
-}
+var compareFiles = utils.compareFiles,
+    compareFilesJSON = utils.compareFilesJSON;
 
 exports.release = {
     bump: function (test) {

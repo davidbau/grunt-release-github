@@ -1,20 +1,16 @@
 'use strict';
 
 var grunt = require('grunt');
-var milestone = require('../tasks/github-milestone.js');
+var milestone = require('../tasks/github-milestone.js'),
+    utils = require('./utils/testsutils.js');
 
-function compareFiles(test, filename, description) {
-    var actual = grunt.file.read('test/fixtures/_' + filename);
-    var expected = grunt.file.read('test/expected/' + filename);
-    test.equal(actual, expected, description);
-    test.done();
-}
+var compareFiles = utils.compareFiles;
 
-exports.release = {
+exports.milestone = {
     updateChangelog: function (test) {
         var credentials = null;
         try {
-            grunt.file.readJSON('test/fixtures/credentials.json');
+            credentials = grunt.file.readJSON('test/fixtures/credentials.json');
         } catch (e) {
             credentials = {};
         }
@@ -22,11 +18,20 @@ exports.release = {
             credentials.repository || process.env.REPOSITORY,
             credentials.version || process.env.VERSION,
             function (changelogText) {
-                var actual = grunt.file.read('test/fixtures/_CHANGELOG_GITHUB.md');
-                changelogText += actual;
+                var current = grunt.file.read('test/fixtures/_CHANGELOG_GITHUB.md');
+                changelogText += current;
                 grunt.file.write('test/fixtures/_CHANGELOG_GITHUB.md', changelogText);
 
-                compareFiles(test, 'CHANGELOG_GITHUB.md', 'should append github milestone issues');
+                var filename = 'CHANGELOG_GITHUB.md';
+                var description = 'should append github milestone issues';
+                var now = new Date();
+                var date = now.getUTCFullYear() + '-' + now.getUTCMonth() + 1 + '-' + now.getUTCDate();
+
+                var actual = grunt.file.read('test/fixtures/_' + filename);
+                var expected = grunt.file.read('test/expected/' + filename);
+
+                test.strictEqual(actual, expected.replace("{{now}}", date), description);
+                test.done();
             });
     }
 };

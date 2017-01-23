@@ -1,2 +1,3 @@
 node_modules
 test/fixtures/credentials.json
+npm-debug.log.*

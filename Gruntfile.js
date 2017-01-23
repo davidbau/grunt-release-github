@@ -3,11 +3,22 @@
 module.exports = function (grunt) {
 
     grunt.initConfig({
+        jshint: {
+            all: [
+                'Gruntfile.js',
+                'tasks/**/*.js',
+                '<%= nodeunit.tests %>'
+            ],
+            options: {
+                jshintrc: '.jshintrc'
+            }
+        },
         clean: {
             test: 'test/fixtures/_*.{json,md}'
         },
         nodeunit: {
-            tests: 'test/*.test.js'
+            tests: ['test/*.test.js', 'test/lib/**/*.test.js'],
+            libTests: 'test/lib/**/*.test.js'
         },
         release: {
             options: {
@@ -109,6 +120,7 @@ module.exports = function (grunt) {
     });
 
     grunt.loadTasks('tasks');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
