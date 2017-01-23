@@ -150,6 +150,7 @@ module.exports = function (grunt) {
                 } else {
                     // fail and stop execution of further tasks
                     deferred.reject('Failed when executing: `' + cmd + '`\n');
+
                 }
             }
             return deferred.promise;
@@ -173,8 +174,9 @@ module.exports = function (grunt) {
                     var changelogPreviousContent = grunt.file.read(filename);
                     var changelogContent = changelogText + changelogPreviousContent;
 
-                    if (changelogPreviousContent.indexOf(changelogText) === -1)
+                    if (changelogPreviousContent.indexOf(changelogText) === -1) {
                         grunt.file.write(filename, changelogContent);
+                    }
 
                     grunt.log.ok('Changelog ' + filename + ' updated');
                     deferred.resolve();
@@ -183,15 +185,16 @@ module.exports = function (grunt) {
 
                     var repo = options.github.repo.split('/');
 
-                    milestone.updateChangelog(repo[0], repo[1], 'v' + config.newVersion, function (newLines) {
+                    milestone.updateChangelog(repo[0], repo[1], config.newVersion, function (newLines) {
                         if (newLines) {
                             var changelogPreviousContent = grunt.file.read(filename);
                             var changelogContent = newLines + grunt.file.read(filename);
 
                             options.changelogContent = newLines;
 
-                            if (changelogPreviousContent.indexOf(newLines) === -1)
+                            if (changelogPreviousContent.indexOf(newLines) === -1) {
                                 grunt.file.write(filename, changelogContent);
+                            }
 
                             grunt.log.ok('Changelog ' + filename + ' updated');
                             deferred.resolve();
@@ -358,7 +361,7 @@ module.exports = function (grunt) {
 
                 if (!nowrite) {
                     for (var i = 0; i < tasks.length; i++) {
-                        for (var i = 0; i < tasks.length; i++) {
+                        for (i = 0; i < tasks.length; i++) {
                             if (typeof tasks[i] === 'string' || !tasks[i].preserveFlags) {
                                 msg = '-> ' + tasks[i] + (flags.length ? ' (ignoring current flags)' : '');
                                 promises.push(run('grunt ' + tasks[i], msg));
