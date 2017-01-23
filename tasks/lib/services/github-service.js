@@ -79,8 +79,8 @@ function _getIssuesByMilestone(user, repository, milestoneNumbre) {
 function requestOptionsHelper(user) {
     return {
         auth: {
-            user: user + ":" + process.env.GITHUB_ACCESS_TOKEN,
-            sendImmediately: false
+            username: user,
+            password: process.env.GITHUB_ACCESS_TOKEN
         },
         headers: {
             'User-Agent': 'grunt-release-github'
