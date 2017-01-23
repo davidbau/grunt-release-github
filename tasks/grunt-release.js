@@ -62,6 +62,61 @@ module.exports = function (grunt) {
             };
         }
 
+        // Defaults
+        var options = grunt.util._.extend({
+            bump: true,
+            changelog: false, // Update changelog file
+            changelogFromGithub: false, //Get github issues
+            // Text which is inserted into change log
+            changelogText: '### <%= version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n',
+
+            // file is in charge of master information, ie, it is it which define the base version to work on
+            file: grunt.config('pkgFile') || 'package.json',
+
+            // additionalFiles are additional files that also need to be bumped
+            additionalFiles: [],
+            // updateVars are grunt variables that also need to be bumped
+            updateVars: [],
+            add: true,
+            commit: true,
+
+            // Text which is inserted into release body
+            githubReleaseBody: 'version <%= version %>',
+            tag: true,
+            push: true,
+            pushTags: true,
+            npm: true,
+            remote: 'origin',
+            beforeReleaseTasks: [],
+            afterReleaseTasks: [],
+            beforeBumpTasks: [],
+            afterBumpTasks: []
+        }, (grunt.config.data[this.name] ||  {}).options);
+        var config = setup(options.file, type);
+
+        var templateOptions = {
+            data: {
+                name: config.name || '',
+                version: config.newVersion
+            }
+        };
+        var tagName = grunt.template.process(grunt.config.getRaw(this.name + '.options.tagName') || '<%= version %>', templateOptions);
+        var commitMessage = grunt.template.process(grunt.config.getRaw(this.name + '.options.commitMessage') || 'release <%= version %>', templateOptions);
+        var tagMessage = grunt.template.process(grunt.config.getRaw(this.name + '.options.tagMessage') || 'version <%= version %>', templateOptions);
+        var githubReleaseBody = grunt.template.process(grunt.config.getRaw(this.name + '.options.githubReleaseBody') || 'version <%= version %>', templateOptions);
+
+        var nowrite = grunt.option('no-write');
+        var indentation = grunt.option('indentation') || '  ';
+        var done = this.async();
+
+        if (!config.newVersion) {
+            grunt.warn('Resulting version number is empty.');
+        }
+
+        if (nowrite) {
+            grunt.log.ok('Release dry run.');
+        }
+
         function getNpmTag() {
             var tag = grunt.option('npmtag') || options.npmtag;
             if (tag === true) {
@@ -322,63 +377,6 @@ module.exports = function (grunt) {
         }
 
         if (process.env.GITHUB_ACCESS_TOKEN) {
-
-
-
-            // Defaults
-            var options = grunt.util._.extend({
-                bump: true,
-                changelog: false, // Update changelog file
-                changelogFromGithub: false, //Get github issues
-                // Text which is inserted into change log
-                changelogText: '### <%= version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n',
-
-                // file is in charge of master information, ie, it is it which define the base version to work on
-                file: grunt.config('pkgFile') || 'package.json',
-
-                // additionalFiles are additional files that also need to be bumped
-                additionalFiles: [],
-                // updateVars are grunt variables that also need to be bumped
-                updateVars: [],
-                add: true,
-                commit: true,
-
-                // Text which is inserted into release body
-                githubReleaseBody: 'version <%= version %>',
-                tag: true,
-                push: true,
-                pushTags: true,
-                npm: true,
-                remote: 'origin',
-                beforeReleaseTasks: [],
-                afterReleaseTasks: [],
-                beforeBumpTasks: [],
-                afterBumpTasks: []
-            }, (grunt.config.data[this.name] ||  {}).options);
-            var config = setup(options.file, type);
-
-            var templateOptions = {
-                data: {
-                    name: config.name || '',
-                    version: config.newVersion
-                }
-            };
-            var tagName = grunt.template.process(grunt.config.getRaw(this.name + '.options.tagName') || '<%= version %>', templateOptions);
-            var commitMessage = grunt.template.process(grunt.config.getRaw(this.name + '.options.commitMessage') || 'release <%= version %>', templateOptions);
-            var tagMessage = grunt.template.process(grunt.config.getRaw(this.name + '.options.tagMessage') || 'version <%= version %>', templateOptions);
-            var githubReleaseBody = grunt.template.process(grunt.config.getRaw(this.name + '.options.githubReleaseBody') || 'version <%= version %>', templateOptions);
-
-            var nowrite = grunt.option('no-write');
-            var indentation = grunt.option('indentation') || '  ';
-            var done = this.async();
-
-            if (!config.newVersion) {
-                grunt.warn('Resulting version number is empty.');
-            }
-
-            if (nowrite) {
-                grunt.log.ok('Release dry run.');
-            }
 
             new Q()
                 .then(ifEnabled('beforeBump', runTasks('beforeBump')))
