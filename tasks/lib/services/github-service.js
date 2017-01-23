@@ -79,8 +79,7 @@ function _getIssuesByMilestone(user, repository, milestoneNumbre) {
 function requestOptionsHelper(user) {
     return {
         auth: {
-            user: user,
-            pass: process.env.GITHUB_ACCESS_TOKEN,
+            user: user + ":" + process.env.GITHUB_ACCESS_TOKEN,
             sendImmediately: false
         },
         headers: {
