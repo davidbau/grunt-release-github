@@ -16,9 +16,9 @@ module.exports = {
 };
 
 
-function _getMilestoneByVersion(user, repository, version) {
+function _getMilestoneByVersion(github, repository, version) {
     return new Promise(function (resolve, reject) {
-        _getMilestones(user, repository).then(function (milestones) {
+        _getMilestones(github, repository).then(function (milestones) {
             var milestone = milestones.filter(function (element) {
                 return element.title === 'v' + version;
             });
@@ -35,13 +35,13 @@ function _getMilestoneByVersion(user, repository, version) {
 }
 
 //module implementation
-function _getMilestones(user, repository) {
+function _getMilestones(github, repository) {
     return new Promise(function (resolve, reject) {
 
-        var milestonesUrl = githubBaseUri + "repos/" + user + "/" + repository + "/milestones";
+        var milestonesUrl = githubBaseUri + "repos/" + repository + "/milestones";
         logger.debug('Getting milestones from url: \n' + milestonesUrl);
 
-        request.get(milestonesUrl, requestOptionsHelper(user), function (err, res, body) {
+        request.get(milestonesUrl, requestOptionsHelper(github), function (err, res, body) {
 
             logger.debug('Receiving request.');
             if (!err && res.statusCode === 200) {
@@ -56,12 +56,12 @@ function _getMilestones(user, repository) {
     });
 }
 
-function _getIssuesByMilestone(user, repository, milestoneNumbre) {
+function _getIssuesByMilestone(github, repository, milestoneNumbre) {
     return new Promise(function (resolve, reject) {
-        var issuesUrl = githubBaseUri + "repos/" + user + "/" + repository + "/issues?state=all&milestone=" + milestoneNumbre;
+        var issuesUrl = githubBaseUri + "repos/" + repository + "/issues?state=all&milestone=" + milestoneNumbre;
         logger.debug('Getting issues from url: \n' + issuesUrl);
 
-        request.get(issuesUrl, requestOptionsHelper(user), function (err, res, body) {
+        request.get(issuesUrl, requestOptionsHelper(github), function (err, res, body) {
 
             logger.debug('Receiving request.');
             if (!err && res.statusCode === 200) {
@@ -76,11 +76,11 @@ function _getIssuesByMilestone(user, repository, milestoneNumbre) {
     });
 }
 
-function requestOptionsHelper(user) {
+function requestOptionsHelper(github) {
     return {
         auth: {
-            username: user,
-            password: process.env.GITHUB_ACCESS_TOKEN
+            username: process.env[github.usernameVar],
+            password: process.env[github.accessTokenVar]
         },
         headers: {
             'User-Agent': 'grunt-release-github'

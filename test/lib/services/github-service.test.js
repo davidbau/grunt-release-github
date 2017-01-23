@@ -3,16 +3,17 @@
 var githubServiceModule = require('../../../tasks/lib/services/github-service.js'),
     utils = require('../../utils/testsutils.js');
 
-var compareJSON = utils.compareJSON,
-    loadCredentials = utils.loadCredentials;
+var compareJSON = utils.compareJSON;
 
+var credentialsMock = {
+    repo: 'dani8art/grunt-release-github',
+    usernameVar: 'GITHUB_USERNAME',
+    accessTokenVar: 'GITHUB_ACCESS_TOKEN'
+};
 
 exports.githubService = {
     getMilestones: function (test) {
-        var credentials = loadCredentials();
-
-        githubServiceModule.getMilestoneByVersion(credentials.user || process.env.USER,
-            credentials.repository || process.env.REPOSITORY, '0.0.0').then(function (milestones) {
+        githubServiceModule.getMilestoneByVersion(credentialsMock, credentialsMock.repo, '0.0.0').then(function (milestones) {
             compareJSON(test, milestones, "getMilestoneByVersion.json", "should be equal.");
         }, function (error) {
             test.expect(false);
@@ -20,10 +21,7 @@ exports.githubService = {
         });
     },
     getIssuesByMilestone: function (test) {
-        var credentials = loadCredentials();
-
-        githubServiceModule.getIssuesByMilestone(credentials.user || process.env.USER,
-            credentials.repository || process.env.REPOSITORY, 2).then(function (issues) {
+        githubServiceModule.getIssuesByMilestone(credentialsMock, credentialsMock.repo, 2).then(function (issues) {
             compareJSON(test, issues, "getIssuesByMilestone.json", "should be equal.");
         }, function (error) {
             test.expect(false);
