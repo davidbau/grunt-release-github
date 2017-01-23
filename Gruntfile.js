@@ -22,6 +22,7 @@ module.exports = function (grunt) {
         },
         release: {
             options: {
+                changelog: true,
                 changelogFromGithub: true,
                 npmtag: false,
                 github: {
