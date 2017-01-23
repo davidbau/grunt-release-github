@@ -24,6 +24,7 @@ module.exports = function (grunt) {
             options: {
                 changelog: true,
                 changelogFromGithub: true,
+                githubReleaseBody: 'See [CHANGELOG.md](./CHANGELOG.md) for details.',
                 npmtag: false,
                 github: {
                     repo: 'dani8art/grunt-release-github',
