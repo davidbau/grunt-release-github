@@ -79,6 +79,9 @@ module.exports = function (grunt) {
             updateVars: [],
             add: true,
             commit: true,
+
+            // Text which is inserted into release body
+            githubReleaseBody: 'version <%= version %>',
             tag: true,
             push: true,
             pushTags: true,
@@ -100,6 +103,7 @@ module.exports = function (grunt) {
         var tagName = grunt.template.process(grunt.config.getRaw(this.name + '.options.tagName') || '<%= version %>', templateOptions);
         var commitMessage = grunt.template.process(grunt.config.getRaw(this.name + '.options.commitMessage') || 'release <%= version %>', templateOptions);
         var tagMessage = grunt.template.process(grunt.config.getRaw(this.name + '.options.tagMessage') || 'version <%= version %>', templateOptions);
+        var githubReleaseBody = grunt.template.process(grunt.config.getRaw(this.name + '.options.githubReleaseBody') || 'version <%= version %>', templateOptions);
 
         var nowrite = grunt.option('no-write');
         var indentation = grunt.option('indentation') || '  ';
@@ -146,6 +150,7 @@ module.exports = function (grunt) {
                 } else {
                     // fail and stop execution of further tasks
                     deferred.reject('Failed when executing: `' + cmd + '`\n');
+
                 }
             }
             return deferred.promise;
@@ -167,10 +172,11 @@ module.exports = function (grunt) {
 
                     var changelogText = grunt.template.process(options.changelogText, templateOptions);
                     var changelogPreviousContent = grunt.file.read(filename);
-                    var changelogContent = changelogText;
+                    var changelogContent = changelogText + changelogPreviousContent;
 
-                    if (changelogPreviousContent.indexOf(changelogText) === -1)
+                    if (changelogPreviousContent.indexOf(changelogText) === -1) {
                         grunt.file.write(filename, changelogContent);
+                    }
 
                     grunt.log.ok('Changelog ' + filename + ' updated');
                     deferred.resolve();
@@ -179,15 +185,16 @@ module.exports = function (grunt) {
 
                     var repo = options.github.repo.split('/');
 
-                    milestone.updateChangelog(repo[0], repo[1], 'v' + config.newVersion, function (newLines) {
+                    milestone.updateChangelog(repo[0], repo[1], config.newVersion, function (newLines) {
                         if (newLines) {
                             var changelogPreviousContent = grunt.file.read(filename);
                             var changelogContent = newLines + grunt.file.read(filename);
 
                             options.changelogContent = newLines;
 
-                            if (changelogPreviousContent.indexOf(newLines) === -1)
+                            if (changelogPreviousContent.indexOf(newLines) === -1) {
                                 grunt.file.write(filename, changelogContent);
+                            }
 
                             grunt.log.ok('Changelog ' + filename + ' updated');
                             deferred.resolve();
@@ -324,7 +331,8 @@ module.exports = function (grunt) {
                 .send({
                     'tag_name': tagName,
                     name: tagMessage,
-                    body: options.changelogContent + 'See [CHANGELOG.md](https://github.com/' + options.github.repo + '/blob/master/CHANGELOG.md) for details.',
+                    //'See [CHANGELOG.md](https://github.com/' + options.github.repo + '/blob/master/CHANGELOG.md) for details.';
+                    body: options.changelogContent + '\n' + githubReleaseBody,
                     prerelease: type === 'prerelease'
                 })
                 .end(function (err, res) {
@@ -353,7 +361,7 @@ module.exports = function (grunt) {
 
                 if (!nowrite) {
                     for (var i = 0; i < tasks.length; i++) {
-                        for (var i = 0; i < tasks.length; i++) {
+                        for (i = 0; i < tasks.length; i++) {
                             if (typeof tasks[i] === 'string' || !tasks[i].preserveFlags) {
                                 msg = '-> ' + tasks[i] + (flags.length ? ' (ignoring current flags)' : '');
                                 promises.push(run('grunt ' + tasks[i], msg));

@@ -2,7 +2,7 @@
 
 > FORKED from [grunt-release](https://github.com/geddski/grunt-release)
 
-[![Build Status](https://travis-ci.org/geddski/grunt-release.svg?branch=master)](https://travis-ci.org/geddski/grunt-release)
+[![Build Status](https://travis-ci.org/dani8art/grunt-release-github.svg?branch=master)](https://travis-ci.org/dani8art/grunt-release-github)
 
 [Grunt](http://gruntjs.com) plugin for automating all the release steps of your node lib or bower component, with optional publishing to npm.
 
@@ -154,6 +154,7 @@ The following are all the release steps, you can disable any you need to:
       npmtag: true, //default: no tag
       indentation: '\t', //default: '  ' (two spaces)
       folder: 'folder/to/publish/to/npm', //default project root
+	  githubReleaseBody: 'RELEASE <%= version %>' //default:  'version <%= version %>'
       tagName: 'some-tag-<%= version %>', //default: '<%= version %>'
       commitMessage: 'check out my release <%= version %>', //default: 'release <%= version %>'
       tagMessage: 'tagging version <%= version %>', //default: 'Version <%= version %>',
