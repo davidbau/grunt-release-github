@@ -28,6 +28,7 @@ module.exports = function (grunt) {
                 npmtag: false,
                 github: {
                     repo: 'dani8art/grunt-release-github',
+                    usernameVar: 'GITHUB_USERNAME',
                     accessTokenVar: 'GITHUB_ACCESS_TOKEN'
                 }
             }

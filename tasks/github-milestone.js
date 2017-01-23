@@ -1,15 +1,19 @@
 'use strict';
 
-var logger = require('winston');
+var logger = require('winston'),
+    grunt = require('grunt');
 
 var githubService = require('./lib/services/github-service.js');
 
-module.exports.updateChangelog = function (user, repository, version, callback) {
+module.exports.updateChangelog = function (github, repository, version, callback) {
 
     logger.debug('Updating changelog.');
+    if (!github) {
+        grunt.fail.warn('Github configuration is required to get changelog from milestone');
+    }
 
-    githubService.getMilestoneByVersion(user, repository, version).then(function (milestone) {
-        githubService.getIssuesByMilestone(user, repository, milestone.number).then(function (issues) {
+    githubService.getMilestoneByVersion(github, repository, version).then(function (milestone) {
+        githubService.getIssuesByMilestone(github, repository, milestone.number).then(function (issues) {
             milestone.issues = issues;
 
             var now = new Date();

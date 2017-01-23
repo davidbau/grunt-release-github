@@ -3,18 +3,15 @@
 var grunt = require('grunt');
 var milestone = require('../tasks/github-milestone.js');
 
+var credentialsMock = {
+    repo: 'dani8art/grunt-release-github',
+    usernameVar: 'GITHUB_USERNAME',
+    accessTokenVar: 'GITHUB_ACCESS_TOKEN'
+};
 
 exports.milestone = {
     updateChangelog: function (test) {
-        var credentials = null;
-        try {
-            credentials = grunt.file.readJSON('test/fixtures/credentials.json');
-        } catch (e) {
-            credentials = {};
-        }
-        milestone.updateChangelog(credentials.user || process.env.USER,
-            credentials.repository || process.env.REPOSITORY,
-            credentials.version || process.env.VERSION,
+        milestone.updateChangelog(credentialsMock, credentialsMock.repo, '0.0.0',
             function (changelogText) {
                 var current = grunt.file.read('test/fixtures/_CHANGELOG_GITHUB.md');
                 changelogText += current;

@@ -183,9 +183,8 @@ module.exports = function (grunt) {
 
                 } else {
 
-                    var repo = options.github.repo.split('/');
-
-                    milestone.updateChangelog(repo[0], repo[1], config.newVersion, function (newLines) {
+                    var repo = options.github.repo;
+                    milestone.updateChangelog(options.github, repo, config.newVersion, function (newLines) {
                         if (newLines) {
                             var changelogPreviousContent = grunt.file.read(filename);
                             var changelogContent = newLines + grunt.file.read(filename);
@@ -376,7 +375,8 @@ module.exports = function (grunt) {
             return Q.all(promises);
         }
 
-        if (process.env.GITHUB_ACCESS_TOKEN) {
+
+        if (!options.github || (process.env[options.github.accessTokenVar] && process.env[options.github.usernameVar])) {
 
             new Q()
                 .then(ifEnabled('beforeBump', runTasks('beforeBump')))
@@ -398,7 +398,9 @@ module.exports = function (grunt) {
                 .finally(done);
 
         } else {
-            grunt.fail.warn('Encironment variable GITHUB_ACCESS_TOKEN is required.');
+            grunt.fail.warn('Environment variable for github username is required. \n' +
+                'Environment variable for github accesstoken is required.\n' +
+                'See your environment vars and your Gruntfile for configuring.');
         }
 
     });
