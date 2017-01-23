@@ -361,7 +361,7 @@ module.exports = function (grunt) {
 
                 if (!nowrite) {
                     for (var i = 0; i < tasks.length; i++) {
-                        for (var i = 0; i < tasks.length; i++) {
+                        for (i = 0; i < tasks.length; i++) {
                             if (typeof tasks[i] === 'string' || !tasks[i].preserveFlags) {
                                 msg = '-> ' + tasks[i] + (flags.length ? ' (ignoring current flags)' : '');
                                 promises.push(run('grunt ' + tasks[i], msg));

@@ -4,6 +4,6 @@ var logger = require('winston');
 
 //Customising logger
 logger.transports.Console.timestamp = true;
-logger.level = 'debug';
+logger.level = 'info';
 
 module.exports = logger;

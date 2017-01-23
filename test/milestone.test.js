@@ -1,10 +1,8 @@
 'use strict';
 
 var grunt = require('grunt');
-var milestone = require('../tasks/github-milestone.js'),
-    utils = require('./utils/testsutils.js');
+var milestone = require('../tasks/github-milestone.js');
 
-var compareFiles = utils.compareFiles;
 
 exports.milestone = {
     updateChangelog: function (test) {

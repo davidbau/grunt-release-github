@@ -48,7 +48,7 @@ function _getMilestones(user, repository) {
                 logger.debug('Request has been done successfully. Body: \n' + JSON.stringify(body, null, 2));
                 resolve(body);
             } else {
-                rejectHelper(err, res, reject)
+                rejectHelper(err, res, reject);
             }
 
         });
@@ -70,7 +70,7 @@ function _getIssuesByMilestone(user, repository, milestoneNumbre) {
                 resolve(body);
 
             } else {
-                rejectHelper(err, res, reject)
+                rejectHelper(err, res, reject);
             }
         });
     });

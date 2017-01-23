@@ -1,8 +1,6 @@
 'use strict';
 
-var request = require('request'),
-    promise = require('bluebird'),
-    logger = require('winston');
+var logger = require('winston');
 
 var githubService = require('./lib/services/github-service.js');
 
