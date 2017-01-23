@@ -1,3 +1,7 @@
+### v1.0.4 - 2017-01-23
+
+- [#25](https://github.com/dani8art/grunt-release-github/issues/25) - separate repository var from username
+
 ### v1.0.3 - 2017-01-23
 
 - [#23](https://github.com/dani8art/grunt-release-github/issues/23) - declare functions and object in correct order.
