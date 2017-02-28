@@ -4,9 +4,9 @@ var cmdManager = require('../../tasks/lib/cmd-manager/cmd-manager');
 var grunt = require('grunt');
 
 
-exports.milestone = {
+exports.cmdManager = {
     setUpGitTests: function (test) {
-        grunt.file.write(Math.random());
+        grunt.file.write('test/fixtures/_cmd-manager.txt', Math.random());
     },
     git_add: function (test) {
         cmdManager.gitAdd(['.']).then(test.done, test.done);
