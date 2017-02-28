@@ -8,7 +8,9 @@ var ErrorModel = require('../domain/error-model');
 module.exports = {
     gitAdd: _gitAdd,
     gitCommit: _gitCommit,
-    gitTag: _gitTag
+    gitTag: _gitTag,
+    gitPush: _gitPush,
+    gitPushTag: _gitPushTag
 };
 
 function _gitTag(tagName, tagMessage) {
@@ -23,6 +25,13 @@ function _gitCommit(commitMessage) {
     return _run('git', ['commit', '-m', commitMessage]);
 }
 
+function _gitPush(remote) {
+    return _run('git', ['push', remote, 'HEAD']);
+}
+
+function _gitPushTag(remote, tagName) {
+    return _run('git', ['push', remote, tagName]);
+}
 
 function _run(cmd, options) {
     return new Promise(function (resolve, reject) {
