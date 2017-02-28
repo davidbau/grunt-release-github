@@ -14,5 +14,9 @@ exports.cmdManager = {
     },
     git_commit: function (test) {
         cmdManager.gitCommit("Tests").then(test.done, test.done);
+    },
+    git_tag: function (test) {
+        cmdManager.gitTag('tests_' + Math.random(), 'message text ' + Math.random())
+            .then(test.done, test.done);
     }
 };
