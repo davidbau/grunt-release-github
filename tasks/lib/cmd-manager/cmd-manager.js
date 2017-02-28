@@ -29,7 +29,7 @@ function _gitCommit(commitMessage) {
 }
 
 function _gitPush(remote) {
-    return _run('git', ['push', remote, 'HEAD']);
+    return _run('git', ['pus', remote, 'HEAD']);
 }
 
 function _gitPushTag(remote, tagName) {
