@@ -18,7 +18,7 @@
     "trailing": true,
     "undef": true,
     "unused": true,
-
+    "validthis": true,
     "globals": {
         "module": true
     }
