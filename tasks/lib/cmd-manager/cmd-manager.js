@@ -12,7 +12,7 @@ module.exports = {
 };
 
 function _gitTag(tagName, tagMessage) {
-    _run('git', ['tag', tagName, '-m', '"' + tagMessage + '"']);
+    return _run('git', ['tag', tagName, '-m', '"' + tagMessage + '"']);
 }
 
 function _gitAdd(options) {
