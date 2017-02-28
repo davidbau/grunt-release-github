@@ -14,8 +14,8 @@ function _gitAdd(options) {
     return _run('git', ['add'].concat(options));
 }
 
-function _gitCommit(commitMessage, options) {
-    return _run('git', ['commit', '-m', commitMessage].concat(options));
+function _gitCommit(commitMessage) {
+    return _run('git', ['commit', '-m', commitMessage]);
 }
 
 
