@@ -7,8 +7,13 @@ var ErrorModel = require('../domain/error-model');
 
 module.exports = {
     gitAdd: _gitAdd,
-    gitCommit: _gitCommit
+    gitCommit: _gitCommit,
+    gitTag: _gitTag
 };
+
+function _gitTag(tagName, tagMessage) {
+    _run('git', ['tag', tagName, '-m', '"' + tagMessage + '"']);
+}
 
 function _gitAdd(options) {
     return _run('git', ['add'].concat(options));
