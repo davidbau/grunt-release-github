@@ -44,7 +44,7 @@ function _gitAdd() {
 }
 
 function _gitCommit() {
-    var commitMessage = this.getCommitMessage;
+    var commitMessage = this.getCommitMessage();
     //build commitMessage
     return this.run('git', ['commit', '-m', commitMessage]);
 }
@@ -72,12 +72,12 @@ function _npmPublish() {
 
 function _getCommitMessage() {
     var grunt = this.grunt;
-    grunt.template.process(grunt.config.getRaw(this.name + '.options.commitMessage') || 'release <%= version %>', this.templateData);
+    return grunt.template.process(grunt.config.getRaw(this.name + '.options.commitMessage') || 'release <%= version %>', this.templateData);
 }
 
 function _getTagMessage() {
     var grunt = this.grunt;
-    grunt.template.process(grunt.config.getRaw(this.name + '.options.tagMessage') || 'version <%= version %>', this.templateData);
+    return grunt.template.process(grunt.config.getRaw(this.name + '.options.tagMessage') || 'version <%= version %>', this.templateData);
 }
 
 function _getTagName() {
