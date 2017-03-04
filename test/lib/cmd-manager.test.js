@@ -1,36 +1,42 @@
 'use strict';
 
-var cmdManager = require('../../tasks/lib/cmd-manager/cmd-manager');
+var Github = require('../../tasks/lib/cmd-manager/github-cmd');
 var grunt = require('grunt');
+var githubCmd;
 
-var tagName = "";
+exports.github_cmd = {
 
-exports.cmdManager = {
-
-    setUpGitTests: function (test) {
+    setUpGithubTests: function (test) {
         grunt.file.write('test/fixtures/_cmd-manager.txt', Math.random());
+        githubCmd = new Github(grunt, {
+            data: {
+                name: '',
+                version: '0.0.0-' + Math.random()
+            }
+        }, {
+                remote: 'origin'
+            });
+
         test.done();
     },
 
     git_add: function (test) {
-        cmdManager.gitAdd(['.']).then(test.done, test.done);
+        githubCmd.gitAdd(['.']).then(test.done, test.done);
     },
 
     git_commit: function (test) {
-        cmdManager.gitCommit("Tests").then(test.done, test.done);
+        githubCmd.gitCommit().then(test.done, test.done);
     },
 
     git_tag: function (test) {
-        tagName = 'tests_' + Math.random();
-        cmdManager.gitTag(tagName, 'message text ' + Math.random())
-            .then(test.done, test.done);
+        githubCmd.gitTag().then(test.done, test.done);
     },
 
     git_push: function (test) {
-        cmdManager.gitPush('origin').then(test.done, test.done);
+        githubCmd.gitPush().then(test.done, test.done);
     },
 
     git_push_tag: function (test) {
-        cmdManager.gitPushTag('origin', tagName).then(test.done, test.done);
+        githubCmd.gitPushTag().then(test.done, test.done);
     }
 };

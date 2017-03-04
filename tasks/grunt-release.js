@@ -19,8 +19,6 @@ module.exports = function (grunt) {
         function setup(file, type) {
             var pkg = grunt.file.readJSON(file);
             var newVersion = pkg.version;
-            var files;
-            var vars;
 
             if (options.bump) {
                 if (semver.valid(type)) {
@@ -28,24 +26,6 @@ module.exports = function (grunt) {
                 } else {
                     newVersion = semver.inc(pkg.version, type || 'patch');
                 }
-            }
-
-            // Check if options.additionalFiles is a single file
-            if (typeof options.additionalFiles === 'string') {
-                files = options.additionalFiles.split(',').map(function (value) {
-                    return value.trim();
-                });
-
-                // You can also add a string with multiple files separated by `,`
-                options.additionalFiles = [].concat(files);
-            }
-
-            if (typeof options.updateVars === 'string') {
-                vars = options.updateVars.split(',').map(function (value) {
-                    return value.trim();
-                });
-
-                options.updateVars = [].concat(vars);
             }
 
             options.additionalFiles.push(file);
@@ -91,7 +71,7 @@ module.exports = function (grunt) {
             afterReleaseTasks: [],
             beforeBumpTasks: [],
             afterBumpTasks: []
-        }, (grunt.config.data[this.name] ||  {}).options);
+        }, (grunt.config.data[this.name] || {}).options);
         var config = setup(options.file, type);
 
         var templateOptions = {
