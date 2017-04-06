@@ -132,7 +132,7 @@ module.exports = function (grunt) {
                 }
             }).then(function () {
                 if (options.pushTags) {
-                    return gitCMD.pushTags(grunt, options);
+                    return gitCMD.pushTag(grunt, options);
                 }
             }).then(function () {
                 if (options.npm) {
