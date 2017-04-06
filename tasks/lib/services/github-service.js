@@ -24,7 +24,6 @@ function _createRelease(options, grunt, type) {
         var password = process.env[options.github.passwordVar];
 
         var data = {
-
             'tag_name': tagName,
             name: grunt.template.process(options.tagMessage),
             body: options.changelogContent + '\n' + options.githubReleaseBody,
@@ -38,6 +37,8 @@ function _createRelease(options, grunt, type) {
                 password: password
             },
             headers: {
+                'Content-Type': 'application/vnd.github.v3+json',
+                'Accept': 'application/vnd.github.v3+json',
                 'User-Agent': 'grunt-release-github'
             },
             json: true,
