@@ -140,13 +140,16 @@ module.exports = function (grunt) {
                 }
             }).then(function () {
                 if (options.npm) {
+                    grunt.log.ok('PUBLISH on npm');
                     npmCMD.publish(options, newVersion);
                 }
             }).then(function () {
                 if (options.github) {
+                    grunt.log.ok('CREATE release on github');
                     githubService.createRelease(options, grunt, type);
                 }
             }).then(function () {
+                grunt.log.ok('RUN afterRelease tasks');
                 return gruntCMD.runTasks(grunt, options.afterRelease);
             }).then(done).catch(function (err) {
                 //rollback
