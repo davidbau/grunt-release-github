@@ -23,6 +23,7 @@ function _createRelease(options, grunt, type) {
         var username = process.env[options.github.usernameVar];
         var password = process.env[options.github.passwordVar];
 
+        console.log('here');
         request.post({
             url: (options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases',
             auth: {
