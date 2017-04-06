@@ -19,13 +19,13 @@ module.exports = {
 function _createRelease(options, grunt, type) {
 
     return new Promise(function (resolve, reject) {
-        var tagName = options.tagName;
+        var tagName = grunt.template.process(options.tagName);
         var username = process.env[options.github.usernameVar];
         var password = process.env[options.github.passwordVar];
 
         var data = {
             'tag_name': tagName,
-            name: options.tagMessage,
+            name: grunt.template.process(options.tagMessage),
             body: options.changelogContent + '\n' + options.githubReleaseBody,
             prerelease: type === 'prerelease'
         };
@@ -37,7 +37,6 @@ function _createRelease(options, grunt, type) {
                 password: password
             },
             headers: {
-                'Accept': 'application/vnd.github.manifold-preview',
                 'User-Agent': 'grunt-release-github'
             },
             json: true,
