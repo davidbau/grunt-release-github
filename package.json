@@ -1,6 +1,6 @@
 {
   "name": "grunt-release-github",
-  "version": "1.0.4",
+  "version": "0.0.0",
   "description": "Release a new version of your Node-based project",
   "main": "Gruntfile.js",
   "scripts": {
@@ -27,6 +27,7 @@
     "q": "^1.4.1",
     "request": "^2.79.0",
     "semver": "^5.1.0",
+    "set-options": "^2.0.1",
     "shelljs": "^0.7.0",
     "superagent": "^1.8.3",
     "winston": "^2.3.0"

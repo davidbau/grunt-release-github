@@ -12,9 +12,43 @@ var logger = require('../logger/logger.js'),
 module.exports = {
     getMilestones: _getMilestones,
     getMilestoneByVersion: _getMilestoneByVersion,
-    getIssuesByMilestone: _getIssuesByMilestone
+    getIssuesByMilestone: _getIssuesByMilestone,
+    createRelease: _createRelease
 };
 
+function _createRelease(options, grunt, type) {
+
+    return new Promise(function (resolve, reject) {
+        var tagName = options.tagName;
+        var username = process.env[options.github.usernameVar];
+        var password = process.env[options.github.passwordVar];
+
+        function success() {
+            grunt.log.ok('created ' + tagName + ' release on GitHub.');
+            resolve();
+        }
+
+        request
+            .post(options.github.apiRoot + '/repos/' + options.github.repo + '/releases')
+            .auth(username, password)
+            .set('Accept', 'application/vnd.github.manifold-preview')
+            .set('User-Agent', 'grunt-release-github')
+            .send({
+                'tag_name': tagName,
+                name: options.tagMessage,
+                body: options.changelogContent + '\n' + options.githubReleaseBody,
+                prerelease: type === 'prerelease'
+            })
+            .end(function (err, res) {
+                if (!err && res && res.statusCode === 201) {
+                    success();
+                } else {
+                    reject('Error creating GitHub release. Response: ' + res.text);
+                }
+            });
+
+    });
+}
 
 function _getMilestoneByVersion(github, repository, version) {
     return new Promise(function (resolve, reject) {
