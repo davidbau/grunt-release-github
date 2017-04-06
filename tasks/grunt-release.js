@@ -128,11 +128,11 @@ module.exports = function (grunt) {
                 }
             }).then(function () {
                 if (options.push) {
-                    return gitCMD.push(grunt, options);
+                    return gitCMD.push(options);
                 }
             }).then(function () {
                 if (options.pushTags) {
-                    return gitCMD.pushTags(options);
+                    return gitCMD.pushTags(grunt, options);
                 }
             }).then(function () {
                 if (options.npm) {
