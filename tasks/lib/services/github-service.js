@@ -41,6 +41,7 @@ function _createRelease(options, grunt, type) {
                 prerelease: type === 'prerelease'
             }
         }, function (err, res) {
+            console.log(err); console.log(res);
             if (!err) {
                 if (res && res.statusCode === 201) {
                     grunt.log.ok('created ' + tagName + ' release on GitHub.');
