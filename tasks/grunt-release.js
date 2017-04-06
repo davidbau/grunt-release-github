@@ -146,7 +146,7 @@ module.exports = function (grunt) {
             }).then(function () {
                 if (options.github) {
                     grunt.log.ok('CREATE release on github');
-                    githubService.createRelease(options, grunt, type);
+                    return githubService.createRelease(options, grunt, type);
                 }
             }).then(function () {
                 grunt.log.ok('RUN afterRelease tasks');
