@@ -30,7 +30,7 @@ function _updateChangelog(options, newVersion) {
 
             options.changelogContent = changelogText;
 
-            grunt.log.ok('Changelog ' + filename + ' updated');
+            grunt.log.ok('UPDATE Changelog ' + filename);
             resolve();
 
         } else {
@@ -47,8 +47,7 @@ function _updateChangelog(options, newVersion) {
                             grunt.file.write(filename, changelogContent);
                         }
 
-                        grunt.log.ok('Changelog ' + filename + ' updated');
-                        logger.debug("here");
+                        grunt.log.ok('UPDATE Changelog ' + filename);
                         resolve();
 
                     } catch (e) {

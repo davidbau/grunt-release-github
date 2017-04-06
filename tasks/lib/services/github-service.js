@@ -46,8 +46,12 @@ function _createRelease(options, grunt, type) {
                 prerelease: type === 'prerelease'
             }
         }, function (err, res) {
-            if (!err || res && res.statusCode === 201) {
-                success();
+            if (!err) {
+                if (res && res.statusCode === 201) {
+                    success();
+                } else {
+                    reject('Error creating GitHub release. Response: ' + res.statusCode);
+                }
             } else {
                 reject('Error creating GitHub release. Response: ' + res.text);
             }
