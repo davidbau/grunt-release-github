@@ -101,14 +101,18 @@ module.exports = function (grunt) {
 
         if (!options.github || (password && username)) {
 
-            grunt.verbose.writeln("Run before bump tasks:");
+            grunt.log.ok('Start release');
+
+            grunt.log.ok('RUN beforeBump tasks');
             gruntCMD.runTasks(grunt, options.beforeBump).then(function () {
                 if (options.bump) {
                     return bumper.bump(grunt, options, newVersion);
                 }
             }).then(function () {
+                grunt.log.ok('RUN afterBump tasks');
                 return gruntCMD.runTasks(grunt, options.afterBump);
             }).then(function () {
+                grunt.log.ok('RUN beforeRelease tasks');
                 return gruntCMD.runTasks(grunt, options.beforeRelease);
             }).then(function () {
                 if (options.changelog) {

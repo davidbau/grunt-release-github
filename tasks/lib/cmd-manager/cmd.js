@@ -12,7 +12,7 @@ module.exports = {
 
 function _run(command, options) {
 
-    grunt.log.ok('running: ' + command + ' ' + options);
+    grunt.log.ok('running: ' + command + ' ' + options.join(' '));
 
     return new Promise(function (resolve, reject) {
         var process = childProcess.spawn(command, options, { shell: true });
