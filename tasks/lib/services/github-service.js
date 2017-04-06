@@ -29,6 +29,7 @@ function _createRelease(options, grunt, type) {
             body: options.changelogContent + '\n' + options.githubReleaseBody,
             prerelease: type === 'prerelease'
         };
+
         console.log(data);
         try {
             request.post((options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases', {
