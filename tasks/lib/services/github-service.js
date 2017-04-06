@@ -35,7 +35,7 @@ function _createRelease(options, grunt, type) {
             request.post((options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases', {
                 auth: {
                     username: username,
-                    pass: password
+                    password: password
                 },
                 headers: {
                     'Content-Type': 'application/vnd.github.v3+json',
@@ -128,7 +128,7 @@ function requestOptionsHelper(github) {
     return {
         auth: {
             username: process.env[github.usernameVar],
-            pass: process.env[github.accessTokenVar]
+            password: process.env[github.accessTokenVar]
         },
         headers: {
             'User-Agent': 'grunt-release-github'
