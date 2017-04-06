@@ -33,8 +33,7 @@ function _createRelease(options, grunt, type) {
         request.post({
             url: (options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases',
             auth: {
-                username: username,
-                password: password
+                username: username + ':' + password
             },
             headers: {
                 'Content-Type': 'application/vnd.github.v3+json',
