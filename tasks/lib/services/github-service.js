@@ -21,7 +21,7 @@ function _createRelease(options, grunt, type) {
     return new Promise(function (resolve, reject) {
         var tagName = grunt.template.process(options.tagName);
         var username = process.env[options.github.usernameVar];
-        var password = process.env[options.github.passwordVar];
+        var password = process.env[options.github.accessTokenVar];
 
         var data = {
             'tag_name': tagName,
@@ -34,7 +34,7 @@ function _createRelease(options, grunt, type) {
             request.post((options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases', {
                 auth: {
                     username: username,
-                    password: password
+                    pass: password
                 },
                 headers: {
                     'Content-Type': 'application/vnd.github.v3+json',
@@ -127,7 +127,7 @@ function requestOptionsHelper(github) {
     return {
         auth: {
             username: process.env[github.usernameVar],
-            password: process.env[github.accessTokenVar]
+            pass: process.env[github.accessTokenVar]
         },
         headers: {
             'User-Agent': 'grunt-release-github'
