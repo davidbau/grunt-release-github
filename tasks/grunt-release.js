@@ -101,7 +101,7 @@ module.exports = function (grunt) {
 
         if (!options.github || (password && username)) {
 
-            grunt.log.ok('Start release');
+            grunt.log.ok('### START RELEASE ###');
 
             grunt.log.ok('RUN beforeBump tasks');
             gruntCMD.runTasks(grunt, options.beforeBump).then(function () {

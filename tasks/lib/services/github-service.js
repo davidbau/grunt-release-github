@@ -23,11 +23,6 @@ function _createRelease(options, grunt, type) {
         var username = process.env[options.github.usernameVar];
         var password = process.env[options.github.passwordVar];
 
-        function success() {
-            grunt.log.ok('created ' + tagName + ' release on GitHub.');
-            resolve();
-        }
-
         request.post({
             url: (options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases',
             auth: {
@@ -48,7 +43,8 @@ function _createRelease(options, grunt, type) {
         }, function (err, res) {
             if (!err) {
                 if (res && res.statusCode === 201) {
-                    success();
+                    grunt.log.ok('created ' + tagName + ' release on GitHub.');
+                    resolve();
                 } else {
                     reject('Error creating GitHub release. Response: ' + res.statusCode);
                 }
