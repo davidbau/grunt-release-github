@@ -31,7 +31,7 @@ function _createRelease(options, grunt, type) {
         };
         console.log(data);
         request.post({
-            url: (options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases',
+            url: (options.github.apiRoot || githubBaseUri) + '/repos/' + options.github.repo + '/releases',
             auth: {
                 username: username + ':' + password
             },
