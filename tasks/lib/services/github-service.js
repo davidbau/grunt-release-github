@@ -29,7 +29,7 @@ function _createRelease(options, grunt, type) {
         }
 
         request
-            .post(options.github.apiRoot + '/repos/' + options.github.repo + '/releases')
+            .post((options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases')
             .auth(username, password)
             .set('Accept', 'application/vnd.github.manifold-preview')
             .set('User-Agent', 'grunt-release-github')
@@ -40,7 +40,7 @@ function _createRelease(options, grunt, type) {
                 prerelease: type === 'prerelease'
             })
             .end(function (err, res) {
-                if (!err && res && res.statusCode === 201) {
+                if (!err || res && res.statusCode === 201) {
                     success();
                 } else {
                     reject('Error creating GitHub release. Response: ' + res.text);
