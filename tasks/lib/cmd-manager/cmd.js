@@ -3,7 +3,6 @@
 
 var childProcess = require('child_process'),
     Promise = require('bluebird'),
-    ErrorModel = require('../domain/error-model').ErrorModel,
     grunt = require('grunt');
 
 

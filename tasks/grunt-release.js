@@ -55,7 +55,7 @@ module.exports = function (grunt) {
 
             push: true,
             pushTags: true,
-            npm: true,
+            npm: false,
             remote: 'origin',
             beforeRelease: [],
             afterRelease: [],
