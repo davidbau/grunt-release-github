@@ -30,31 +30,35 @@ function _createRelease(options, grunt, type) {
             prerelease: type === 'prerelease'
         };
         console.log(data);
-        request.post({
-            url: (options.github.apiRoot || githubBaseUri) + '/repos/' + options.github.repo + '/releases',
-            auth: {
-                username: username + ':' + password
-            },
-            headers: {
-                'Content-Type': 'application/vnd.github.v3+json',
-                'Accept': 'application/vnd.github.v3+json',
-                'User-Agent': 'grunt-release-github'
-            },
-            json: true,
-            body: data
-        }, function (err, res) {
-            console.log(err); console.log(res);
-            if (!err) {
-                if (res && res.statusCode === 201) {
-                    grunt.log.ok('created ' + tagName + ' release on GitHub.');
-                    resolve();
+        try {
+            request.post({
+                url: (options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases',
+                auth: {
+                    username: username + ':' + password
+                },
+                headers: {
+                    'Content-Type': 'application/vnd.github.v3+json',
+                    'Accept': 'application/vnd.github.v3+json',
+                    'User-Agent': 'grunt-release-github'
+                },
+                json: true,
+                body: data
+            }, function (err, res) {
+                console.log(err); console.log(res);
+                if (!err) {
+                    if (res && res.statusCode === 201) {
+                        grunt.log.ok('created ' + tagName + ' release on GitHub.');
+                        resolve();
+                    } else {
+                        reject('Error creating GitHub release. Response: ' + res.statusCode);
+                    }
                 } else {
-                    reject('Error creating GitHub release. Response: ' + res.statusCode);
+                    reject('Error creating GitHub release. Response: ' + res.text);
                 }
-            } else {
-                reject('Error creating GitHub release. Response: ' + res.text);
-            }
-        });
+            });
+        } catch (e) {
+            reject(e.toString());
+        }
 
     });
 }
