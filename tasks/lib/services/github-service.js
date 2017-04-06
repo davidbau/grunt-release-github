@@ -23,7 +23,13 @@ function _createRelease(options, grunt, type) {
         var username = process.env[options.github.usernameVar];
         var password = process.env[options.github.passwordVar];
 
-        console.log('here');
+        var data = {
+            'tag_name': tagName,
+            name: options.tagMessage,
+            body: options.changelogContent + '\n' + options.githubReleaseBody,
+            prerelease: type === 'prerelease'
+        };
+        console.log(data);
         request.post({
             url: (options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases',
             auth: {
@@ -35,12 +41,7 @@ function _createRelease(options, grunt, type) {
                 'User-Agent': 'grunt-release-github'
             },
             json: true,
-            body: {
-                'tag_name': tagName,
-                name: options.tagMessage,
-                body: options.changelogContent + '\n' + options.githubReleaseBody,
-                prerelease: type === 'prerelease'
-            }
+            body: data
         }, function (err, res) {
             console.log(err); console.log(res);
             if (!err) {
