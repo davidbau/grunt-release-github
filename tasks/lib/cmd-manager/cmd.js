@@ -34,7 +34,7 @@ function _run(command, options) {
                 resolve();
             } else {
                 grunt.log.error('An error occured while ' + command + ' was executing.');
-                reject(new ErrorModel(500, 'An error occured while command was executing.'));
+                reject(new Error('An error occured while command was executing.'));
             }
         });
     });
