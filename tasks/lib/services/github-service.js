@@ -28,24 +28,30 @@ function _createRelease(options, grunt, type) {
             resolve();
         }
 
-        request
-            .post((options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases')
-            .auth(username, password)
-            .set('Accept', 'application/vnd.github.manifold-preview')
-            .set('User-Agent', 'grunt-release-github')
-            .send({
+        request.post({
+            url: (options.github.apiRoot || 'https://api.github.com') + '/repos/' + options.github.repo + '/releases',
+            auth: {
+                username: username,
+                password: password
+            },
+            headers: {
+                'Accept': 'application/vnd.github.manifold-preview',
+                'User-Agent': 'grunt-release-github'
+            },
+            json: true,
+            body: {
                 'tag_name': tagName,
                 name: options.tagMessage,
                 body: options.changelogContent + '\n' + options.githubReleaseBody,
                 prerelease: type === 'prerelease'
-            })
-            .end(function (err, res) {
-                if (!err || res && res.statusCode === 201) {
-                    success();
-                } else {
-                    reject('Error creating GitHub release. Response: ' + res.text);
-                }
-            });
+            }
+        }, function (err, res) {
+            if (!err || res && res.statusCode === 201) {
+                success();
+            } else {
+                reject('Error creating GitHub release. Response: ' + res.text);
+            }
+        });
 
     });
 }
