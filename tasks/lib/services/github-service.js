@@ -24,6 +24,7 @@ function _createRelease(options, grunt, type) {
         var password = process.env[options.github.passwordVar];
 
         var data = {
+
             'tag_name': tagName,
             name: grunt.template.process(options.tagMessage),
             body: options.changelogContent + '\n' + options.githubReleaseBody,
