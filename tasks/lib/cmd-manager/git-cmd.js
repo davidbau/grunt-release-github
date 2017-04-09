@@ -8,7 +8,7 @@ module.exports = {
     tag: _tag,
     push: _push,
     pushTag: _pushTag,
-    removeTagsRemote: _removeTagRemote,
+    removeTagRemote: _removeTagRemote,
     removeTagLocal: _removeTagLocal,
     resetAndPush: _resetAndPush,
     discardChanges: _discardChanges
