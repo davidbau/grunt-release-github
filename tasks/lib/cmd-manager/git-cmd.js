@@ -10,8 +10,13 @@ module.exports = {
     pushTag: _pushTag,
     removeTagsRemote: _removeTagRemote,
     removeTagLocal: _removeTagLocal,
-    resetAndPush: _resetAndPush
+    resetAndPush: _resetAndPush,
+    discardChanges: _discardChanges
 };
+
+function _discardChanges() {
+    return run('git', ['checkout', '.']);
+}
 
 //git reset --hard HEAD~1
 //git push origin HEAD --force

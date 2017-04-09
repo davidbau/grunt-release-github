@@ -24,17 +24,23 @@ module.exports = {
     rollback_pushTag: _rollback_pushTag,
     rollback_tag: _rollback_tag,
 
-    rollback_commit: _rollback_commit
+    rollback_commit: _rollback_commit,
+    rollback_add: _rollback_add
 };
+
+function _rollback_add(grunt) {
+    grunt.log.ok('RUN rollback add');
+    return gitCMD.discardChanges();
+}
 
 function _rollback_tag(grunt, data) {
     grunt.log.ok('RUN rollback tag');
     return gitCMD.removeTagLocal(grunt, data.options);
 }
 
-function _rollback_commit(grunt) {
+function _rollback_commit(grunt, data) {
     grunt.log.ok('RUN rollback commit');
-    return gitCMD.resetCommit();
+    return gitCMD.resetAndPush(grunt, data.options);
 }
 
 function _rollback_pushTag(grunt, data) {
