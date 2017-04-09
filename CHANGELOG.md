@@ -1,3 +1,11 @@
+### v0.0.0 - 2017-04-09
+
+- [#10](https://github.com/dani8art/grunt-release-github/issues/10) - Issue for testing module 03
+
+- [#9](https://github.com/dani8art/grunt-release-github/issues/9) - Issue for testing module 02
+
+- [#8](https://github.com/dani8art/grunt-release-github/issues/8) - Issue for testing module 01
+
 ### v1.0.4 - 2017-01-23
 
 - [#25](https://github.com/dani8art/grunt-release-github/issues/25) - separate repository var from username
