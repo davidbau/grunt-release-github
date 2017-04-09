@@ -119,7 +119,11 @@ function _getMilestones(github, repository) {
             logger.debug('Receiving request.');
             if (!err && res.statusCode === 200) {
                 logger.debug('Request has been done successfully. Body: \n' + JSON.stringify(body, null, 2));
-                resolve(body);
+                if (body.length !== 0) {
+                    resolve(body);
+                } else {
+                    reject('There is not issues for this milestone');
+                }
             } else {
                 rejectHelper(err, res, reject);
             }
