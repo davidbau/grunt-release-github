@@ -10,9 +10,7 @@ const STEPS = ['bump', 'changelog', 'add',
     'pushTag', 'publish', 'release'];
 
 var doneSteps = [];
-var rollbackData = {
-
-};
+var rollbackData = {};
 
 module.exports = {
     addStepCalled: _addStepCalled,
@@ -24,12 +22,11 @@ module.exports = {
     rollback_pushTag: _rollback_pushTag,
     rollback_tag: _rollback_tag,
 
-
-
-
     rollback_commit: _rollback_commit,
     rollback_add: _rollback_add
 };
+
+
 
 function _rollback_add(grunt) {
     grunt.log.ok('RUN rollback add');
@@ -76,6 +73,8 @@ function _rollback_release(grunt, data) {
 }
 
 function _addStepCalled(step, data) {
-    doneSteps.push(step);
-    rollbackData[step] = data;
+    if (doneSteps.indexOf(step) == -1) {
+        doneSteps.push(step);
+        rollbackData[step] = data;
+    }
 }

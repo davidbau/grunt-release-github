@@ -15,6 +15,7 @@ var changelogManager = require('./lib/changelog-manager/changelog-manager'),
     gruntCMD = require('./lib/cmd-manager/grunt-cmd'),
     bumper = require('./lib/bumper/bumper'),
     githubService = require('./lib/services/github-service'),
+    rollbackMG = require('./lib/rollback-manager/rollback-manager'),
     npmCMD = require('./lib/cmd-manager/npm-cmd');
 
 module.exports = function (grunt) {
@@ -109,6 +110,7 @@ module.exports = function (grunt) {
                     return bumper.bump(grunt, options, newVersion);
                 }
             }).then(function () {
+                rollbackMG.addStepCalled('add', {});
                 grunt.log.ok('RUN afterBump tasks');
                 return gruntCMD.runTasks(grunt, options.afterBump);
             }).then(function () {
@@ -119,18 +121,22 @@ module.exports = function (grunt) {
                     return changelogManager.updateChangelog(options, newVersion);
                 }
             }).then(function () {
+                rollbackMG.addStepCalled('add', {});
                 if (options.add) {
                     return gitCMD.add();
                 }
             }).then(function () {
+                rollbackMG.addStepCalled('add', {});
                 if (options.commit) {
                     return gitCMD.commit(grunt, options);
                 }
             }).then(function () {
+                rollbackMG.addStepCalled('commit', { options: options });
                 if (options.tag) {
                     return gitCMD.tag(grunt, options);
                 }
             }).then(function () {
+                rollbackMG.addStepCalled('tag', { options: options });
                 if (options.push) {
                     return gitCMD.push(options);
                 }
@@ -139,21 +145,28 @@ module.exports = function (grunt) {
                     return gitCMD.pushTag(grunt, options);
                 }
             }).then(function () {
+                rollbackMG.addStepCalled('pushTag', { options: options });
                 if (options.npm) {
                     grunt.log.ok('PUBLISH on npm');
                     return npmCMD.publish(options, newVersion);
                 }
             }).then(function () {
+                rollbackMG.addStepCalled('publish', { package: pkg.name, version: newVersion });
                 if (options.github) {
                     grunt.log.ok('CREATE release on github');
-                    return githubService.createRelease(options, grunt, type);
+                    return githubService.createRelease(options, grunt, type).then(function (id) {
+                        rollbackMG.addStepCalled('release', { repo: options.github.repo, releaseId: id });
+                    });
                 }
             }).then(function () {
                 grunt.log.ok('RUN afterRelease tasks');
                 return gruntCMD.runTasks(grunt, options.afterRelease);
             }).then(done).catch(function (err) {
                 //rollback
-                grunt.fail.warn(err.toString() || 'release failed');
+                grunt.log.warn('Error: Something was worng. ' + err.toString());
+                rollbackMG.rollback().then(done, function (err) {
+                    grunt.fail.warn('Error: Something was worng with rollback: ' + err.toString());
+                });
             });
 
         } else {

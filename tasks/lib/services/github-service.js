@@ -58,11 +58,11 @@ function _createRelease(options, grunt, type) {
                 },
                 json: true,
                 body: data
-            }, function (err, res) {
+            }, function (err, res, body) {
                 if (!err) {
                     if (res && res.statusCode === 201) {
                         grunt.log.ok('created ' + tagName + ' release on GitHub.');
-                        resolve();
+                        resolve(body.id);
                     } else {
                         reject('Error creating GitHub release. Response: ' + res.statusCode);
                     }
