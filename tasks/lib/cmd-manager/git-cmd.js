@@ -15,7 +15,9 @@ module.exports = {
 };
 
 function _discardChanges() {
-    return run('git', ['checkout', '.']);
+    return run('git', ['reset', 'HEAD', '.']).then(function () {
+        return run('git', ['checkout', '.']);
+    });
 }
 
 //git reset --hard HEAD~1
