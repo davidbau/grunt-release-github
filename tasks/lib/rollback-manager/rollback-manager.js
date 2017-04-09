@@ -77,4 +77,5 @@ function _addStepCalled(step, data) {
         doneSteps.push(step);
         rollbackData[step] = data;
     }
+
 }
