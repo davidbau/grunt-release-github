@@ -59,7 +59,7 @@ function _rollback(grunt) {
     var rollbackManager = this;
 
     return Promise.each(actions, function (action) {
-        return rollbackManager['_rollback_' + action](grunt, rollbackData[action]);
+        return rollbackManager['rollback_' + action](grunt, rollbackData[action]);
     });
 }
 
