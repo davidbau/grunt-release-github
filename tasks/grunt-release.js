@@ -155,7 +155,7 @@ module.exports = function (grunt) {
                 if (options.github) {
                     grunt.log.ok('CREATE release on github');
                     return githubService.createRelease(options, grunt, type).then(function (id) {
-                        rollbackMG.addStepCalled('release', { repo: options.github.repo, releaseId: id });
+                        rollbackMG.addStepCalled('release', { options: options, repo: options.github.repo, releaseId: id });
                     });
                 }
             }).then(function () {

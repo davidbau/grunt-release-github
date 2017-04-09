@@ -68,7 +68,7 @@ function _rollback_release(grunt, data) {
     if (!data || !data.releaseId) {
         grunt.fail.warn('Error: No ID for removing');
     } else {
-        return githubClient.removeRelease(data.repo, data.releaseId);
+        return githubClient.removeRelease(data.options, data.repo, data.releaseId);
     }
 }
 

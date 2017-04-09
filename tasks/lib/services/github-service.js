@@ -17,9 +17,22 @@ module.exports = {
     removeRelease: _removeRelease
 };
 
-function _removeRelease(repo, id) {
+function _removeRelease(options, repo, id) {
     return new Promise(function (resolve, reject) {
-        request.delete('https://api.github.com/repos/' + repo + '/releases/' + id, function (err, res) {
+        var username = process.env[options.github.usernameVar];
+        var password = process.env[options.github.accessTokenVar];
+        request.delete('https://api.github.com/repos/' + repo + '/releases/' + id, {
+            auth: {
+                username: username,
+                pass: password
+            },
+            headers: {
+                'Content-Type': 'application/vnd.github.v3+json',
+                'Accept': 'application/vnd.github.v3+json',
+                'User-Agent': 'grunt-release-github'
+            },
+            json: true,
+        }, function (err, res) {
             if (err) {
                 reject(err);
             } else if (res && res.statusCode >= 300) {
