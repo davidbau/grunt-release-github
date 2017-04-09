@@ -151,7 +151,9 @@ module.exports = function (grunt) {
                     return npmCMD.publish(options, newVersion);
                 }
             }).then(function () {
-                rollbackMG.addStepCalled('publish', { package: pkg.name, version: newVersion });
+                if (options.npm) {
+                    rollbackMG.addStepCalled('publish', { package: pkg.name, version: newVersion });
+                }
                 if (options.github) {
                     grunt.log.ok('CREATE release on github');
                     return githubService.createRelease(options, grunt, type).then(function (id) {
