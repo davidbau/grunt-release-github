@@ -5,9 +5,14 @@ var CMD = require('./cmd');
 var run = CMD.run;
 
 module.exports = {
-    publish: _publish
+    publish: _publish,
+    unpublish: _unpublish
 };
 
+function _unpublish(packageName, version) {
+    var opt = ['unpublish', packageName + '@' + version];
+    return run('npm', opt);
+}
 
 function _publish(options, newVersion) {
     var opt = ['publish'];

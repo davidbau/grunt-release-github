@@ -7,8 +7,22 @@ module.exports = {
     commit: _commit,
     tag: _tag,
     push: _push,
-    pushTag: _pushTag
+    pushTag: _pushTag,
+    removeTagsRemote: _removeTagRemote,
+    removeTagLocal: _removeTagLocal
 };
+
+//git tag -d release01
+function _removeTagLocal(grunt, options) {
+    var tagName = _getTagName(grunt, options);
+    return run('git', ['tag', '-d', tagName]);
+}
+
+function _removeTagRemote(grunt, options) {
+    //  git push --delete origin tagname
+    var tagName = _getTagName(grunt, options);
+    return run('git', ['push', '--delete', options.remote, tagName]);
+}
 
 function _tag(grunt, options) {
     var tagName = _getTagName(grunt, options);

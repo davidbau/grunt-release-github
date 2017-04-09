@@ -141,7 +141,7 @@ module.exports = function (grunt) {
             }).then(function () {
                 if (options.npm) {
                     grunt.log.ok('PUBLISH on npm');
-                    npmCMD.publish(options, newVersion);
+                    return npmCMD.publish(options, newVersion);
                 }
             }).then(function () {
                 if (options.github) {

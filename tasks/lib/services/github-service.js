@@ -13,8 +13,23 @@ module.exports = {
     getMilestones: _getMilestones,
     getMilestoneByVersion: _getMilestoneByVersion,
     getIssuesByMilestone: _getIssuesByMilestone,
-    createRelease: _createRelease
+    createRelease: _createRelease,
+    removeRelease: _removeRelease
 };
+
+function _removeRelease(repo, id) {
+    return new Promise(function (resolve, reject) {
+        request.delete('https://api.github.com/repos/' + repo + '/releases/' + id, function (err, res) {
+            if (err) {
+                reject(err);
+            } else if (res && res.statusCode >= 300) {
+                reject(new Error('Error: remove release responds with: ' + res.statusCode));
+            } else {
+                resolve();
+            }
+        });
+    });
+}
 
 function _createRelease(options, grunt, type) {
 
@@ -44,7 +59,6 @@ function _createRelease(options, grunt, type) {
                 json: true,
                 body: data
             }, function (err, res) {
-                console.log(err); console.log(res);
                 if (!err) {
                     if (res && res.statusCode === 201) {
                         grunt.log.ok('created ' + tagName + ' release on GitHub.');
