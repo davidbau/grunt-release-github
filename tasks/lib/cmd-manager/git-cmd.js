@@ -9,8 +9,17 @@ module.exports = {
     push: _push,
     pushTag: _pushTag,
     removeTagsRemote: _removeTagRemote,
-    removeTagLocal: _removeTagLocal
+    removeTagLocal: _removeTagLocal,
+    resetAndPush: _resetAndPush
 };
+
+//git reset --hard HEAD~1
+//git push origin HEAD --force
+function _resetAndPush(grunt, options) {
+    return run('git', ['reset', '--hard', 'HEAD~1']).then(function () {
+        return run('git', ['push', options.remote, 'HEAD', '--force']);
+    });
+}
 
 //git tag -d release01
 function _removeTagLocal(grunt, options) {

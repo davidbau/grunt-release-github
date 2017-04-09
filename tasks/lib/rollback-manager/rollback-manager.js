@@ -32,9 +32,9 @@ function _rollback_tag(grunt, data) {
     return gitCMD.removeTagLocal(grunt, data.options);
 }
 
-function _rollback_commit(grunt, data) {
+function _rollback_commit(grunt) {
     grunt.log.ok('RUN rollback commit');
-    return gitCMD.checkoutCommit(data.sha);
+    return gitCMD.resetCommit();
 }
 
 function _rollback_pushTag(grunt, data) {
