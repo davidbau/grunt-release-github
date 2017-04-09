@@ -164,7 +164,7 @@ module.exports = function (grunt) {
             }).then(done).catch(function (err) {
                 //rollback
                 grunt.log.warn('Error: Something was worng. ' + err.toString());
-                rollbackMG.rollback().then(done, function (err) {
+                rollbackMG.rollback(grunt).then(done, function (err) {
                     grunt.fail.warn('Error: Something was worng with rollback: ' + err.toString());
                 });
             });
