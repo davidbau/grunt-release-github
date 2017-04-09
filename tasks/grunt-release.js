@@ -160,8 +160,6 @@ module.exports = function (grunt) {
                 }
             }).then(function () {
                 grunt.log.ok('RUN afterRelease tasks');
-                var f;
-                f.lr();
                 return gruntCMD.runTasks(grunt, options.afterRelease);
             }).then(done).catch(function (err) {
                 //rollback
