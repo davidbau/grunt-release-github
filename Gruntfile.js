@@ -3,6 +3,7 @@
 module.exports = function (grunt) {
 
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
         jshint: {
             all: [
                 'Gruntfile.js',
@@ -18,7 +19,8 @@ module.exports = function (grunt) {
         },
         nodeunit: {
             tests: ['test/*.test.js', 'test/lib/**/*.test.js'],
-            libTests: 'test/lib/**/*.test.js'
+            libTests: 'test/lib/**/*.test.js',
+            gruntCmd: 'test/lib/grunt-cmd.test.js'
         },
         release: {
             options: {
@@ -155,6 +157,10 @@ module.exports = function (grunt) {
         this.files.forEach(function (f) {
             grunt.file.copy(f.from, f.dest);
         });
+    });
+
+    grunt.registerTask('hello', 'Hello world!', function () {
+        grunt.log.ok('Hello world!');
     });
 
     grunt.registerMultiTask('releaseTest', function () {

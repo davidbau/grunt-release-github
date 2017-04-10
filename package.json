@@ -24,10 +24,9 @@
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.4.7",
-    "q": "^1.4.1",
     "request": "^2.79.0",
     "semver": "^5.1.0",
-    "shelljs": "^0.7.0",
+    "set-options": "^2.0.1",
     "superagent": "^1.8.3",
     "winston": "^2.3.0"
   },
