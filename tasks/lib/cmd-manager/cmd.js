@@ -20,7 +20,7 @@ function _run(command, options) {
         process.stdout.on('data', function () { });
 
         process.stderr.on('data', function (data) {
-            grunt.log.error(data.toString());
+            // grunt.log.error(data.toString());
         });
 
         process.on('exit', function (code) {
@@ -28,7 +28,7 @@ function _run(command, options) {
                 resolve();
             } else {
                 grunt.log.error('An error occured while ' + command + ' was executing.');
-                reject(new Error('An error occured while command was executing.'));
+                reject(new Error('An error occured while  ' + command + ' ' + options.join(' ') + ' was executing.'));
             }
         });
     });
