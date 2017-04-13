@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 
             // file is in charge of master information, ie, it is it which define the base version to work on
             file: grunt.config('pkgFile') || 'package.json',
-            packageObject: 'pkg',
+            packageObject: null,
 
             // additionalFiles are additional files that also need to be bumped
             additionalFiles: [],
@@ -70,7 +70,7 @@ module.exports = function (grunt) {
         var options = merge(userOptions, defaultsOptions);
 
         //if package if null fail;
-        var pkg = grunt.config(options.packageObject);
+        var pkg = grunt.config(options.packageObject) || grunt.file.readJSON(options.file);
 
         if (pkg == null) {
             grunt.fail.warn('pkg object NOT FOUND, please see "release.packageObject" option.');
