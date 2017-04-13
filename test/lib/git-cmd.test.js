@@ -7,8 +7,8 @@ var grunt = require('grunt');
 var version = '0.0.0-' + Math.random();
 var gitData = {
     commitMessage: 'test version' + version,
-    tagMessage: version,
-    tagName: 'v' + version,
+    tagMessage: 'v' + version,
+    tagName: version,
     remote: 'origin'
 };
 
