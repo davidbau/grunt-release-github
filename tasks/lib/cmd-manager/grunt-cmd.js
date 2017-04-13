@@ -14,7 +14,7 @@ function _runTask(grunt, task) {
     }
 
     if (typeof task === 'string') {
-        return run('grunt', [task].concat(args));
+        return run('grunt', [task]);
     } else {
         return run('grunt', [task.name].concat(args));
         //grunt.fail.warn('Fail while ' + task + ' was executing.');

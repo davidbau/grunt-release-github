@@ -19,10 +19,14 @@ module.exports = {
     rollback_tag: _rollback_tag,
 
     rollback_commit: _rollback_commit,
-    rollback_add: _rollback_add
+    rollback_add: _rollback_add,
+    clean: _clean
 };
 
-
+function _clean() {
+    doneSteps = [];
+    rollbackData = {};
+}
 
 function _rollback_add(grunt) {
     grunt.log.ok('RUN rollback add');
