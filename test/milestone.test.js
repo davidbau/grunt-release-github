@@ -31,6 +31,6 @@ exports.milestone = {
 
             test.strictEqual(actual, expected.replace("{{now}}", date), description);
             test.done();
-        });
+        }, test.done);
     }
 };

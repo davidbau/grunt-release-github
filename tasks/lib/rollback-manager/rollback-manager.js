@@ -5,10 +5,6 @@ var Promise = require('bluebird'),
     npmCMD = require('../cmd-manager/npm-cmd'),
     gitCMD = require('../cmd-manager/git-cmd');
 
-const STEPS = ['bump', 'changelog', 'add',
-    'commit', 'tag', 'push',
-    'pushTag', 'publish', 'release'];
-
 var doneSteps = [];
 var rollbackData = {};
 
@@ -58,8 +54,13 @@ function _rollback(grunt) {
     var actions = doneSteps.reverse();
     var rollbackManager = this;
 
-    return Promise.each(actions, function (action) {
-        return rollbackManager['rollback_' + action](grunt, rollbackData[action]);
+    return new Promise(function (resolve, reject) {
+        Promise.each(actions, function (action) {
+            return rollbackManager['rollback_' + action](grunt, rollbackData[action]);
+        }).then(function () {
+            doneSteps = [];
+            rollbackData = {};
+        }, reject);
     });
 }
 
