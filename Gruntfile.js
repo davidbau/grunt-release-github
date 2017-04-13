@@ -24,6 +24,7 @@ module.exports = function (grunt) {
         },
         release: {
             options: {
+                packageObject: 'pkg',
                 changelog: true,
                 changelogFromGithub: true,
                 githubReleaseBody: 'See [CHANGELOG.md](./CHANGELOG.md) for details.',

@@ -70,7 +70,7 @@ module.exports = function (grunt) {
         var options = merge(userOptions, defaultsOptions);
 
         //if package if null fail;
-        var pkg = grunt.config(options.packageObject) || grunt.file.readJSON(options.file);
+        var pkg = options.packageObject ? grunt.config(options.packageObject) : grunt.file.readJSON(options.file);
 
         if (pkg == null) {
             grunt.fail.warn('pkg object NOT FOUND, please see "release.packageObject" option.');
