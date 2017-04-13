@@ -25,10 +25,10 @@ module.exports.getMilestoneText = function (options, version) {
                 var month = parseInt(now.getUTCMonth()) + 1;
                 var day = now.getUTCDate();
 
-                var stringChangelog = "### " + milestone.title + ' - ' + year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day) + '\n\n';
+                var stringChangelog = "### " + milestone.title + ' - ' + year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day) + '\r\n\r\n';
 
                 milestone.issues.forEach(function (element) {
-                    stringChangelog += '- [#' + element.number + '](' + element.html_url + ') - ' + element.title + '\n\n';
+                    stringChangelog += '- [#' + element.number + '](' + element.html_url + ') - ' + element.title + '\r\n\r\n';
                 });
 
                 logger.debug(stringChangelog);
