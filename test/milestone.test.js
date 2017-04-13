@@ -1,7 +1,7 @@
 'use strict';
 
 var grunt = require('grunt');
-var milestone = require('../tasks/github-milestone.js');
+var milestone = require('../tasks/lib/services/github-milestone.js');
 
 var options = {
     github: {
@@ -12,8 +12,8 @@ var options = {
 };
 
 exports.milestone = {
-    updateChangelog: function (test) {
-        milestone.updateChangelog(options, '0.0.0', function (changelogText) {
+    getMilestoneText: function (test) {
+        milestone.getMilestoneText(options, '0.0.0').then(function (changelogText) {
             var current = grunt.file.read('test/fixtures/_CHANGELOG_GITHUB.md');
             changelogText += current;
             grunt.file.write('test/fixtures/_CHANGELOG_GITHUB.md', changelogText);
