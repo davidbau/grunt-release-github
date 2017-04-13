@@ -20,7 +20,7 @@ exports.github_cmd = {
     },
 
     git_add: function (test) {
-        gitCMD.gitAdd().then(function () {
+        gitCMD.add().then(function () {
             rollbackManager.addStepCalled('add', {});
             test.done();
         }, function () {
@@ -29,7 +29,7 @@ exports.github_cmd = {
     },
 
     git_commit: function (test) {
-        gitCMD.gitCommit(grunt, gitData).then(function () {
+        gitCMD.commit(grunt, gitData).then(function () {
             rollbackManager.addStepCalled('commit', { options: gitData });
             test.done();
         }, function () {
@@ -38,7 +38,7 @@ exports.github_cmd = {
     },
 
     git_tag: function (test) {
-        gitCMD.gitTag(grunt, gitData).then(function () {
+        gitCMD.tag(grunt, gitData).then(function () {
             rollbackManager.addStepCalled('tag', { options: gitData });
             test.done();
         }, function () {
@@ -47,11 +47,11 @@ exports.github_cmd = {
     },
 
     git_push: function (test) {
-        gitCMD.gitPush(gitData).then(test.done, test.done);
+        gitCMD.push(gitData).then(test.done, test.done);
     },
 
     git_push_tag: function (test) {
-        gitCMD.gitPushTag(grunt, gitData).then(function () {
+        gitCMD.pushTag(grunt, gitData).then(function () {
             rollbackManager.addStepCalled('pushTag', { options: gitData });
             test.done();
         }, function () {
