@@ -57,8 +57,7 @@ function _rollback(grunt) {
     grunt.log.ok('Execute ROLLBACK actions');
     var actions = doneSteps.reverse();
     var rollbackManager = this;
-    console.log(actions);
-    console.log(rollbackData);
+
     return new Promise(function (resolve, reject) {
         Promise.each(actions, function (action) {
             return rollbackManager['rollback_' + action](grunt, rollbackData[action]);
