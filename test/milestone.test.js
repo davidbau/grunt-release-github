@@ -11,7 +11,7 @@ var options = {
     }
 };
 
-var expectedText = '### v0.0.0 - {{now}}\n\n- [#10](https://github.com/dani8art/grunt-release-github/issues/10) - Issue for testing module 03\n\n- [#9](https://github.com/dani8art/grunt-release-github/issues/9) - Issue for testing module 02\n\n- [#8](https://github.com/dani8art/grunt-release-github/issues/8) - Issue for testing module 01\n\n* Test Entry\r\n';
+var expectedText = '### v0.0.0 - {{now}}\n\n- [#10](https://github.com/dani8art/grunt-release-github/issues/10) - Issue for testing module 03\n\n- [#9](https://github.com/dani8art/grunt-release-github/issues/9) - Issue for testing module 02\n\n- [#8](https://github.com/dani8art/grunt-release-github/issues/8) - Issue for testing module 01\n\n* Test Entry';
 
 exports.milestone = {
     getMilestoneText: function (test) {
