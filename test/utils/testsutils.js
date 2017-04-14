@@ -20,7 +20,7 @@ function _compareFiles(test, filename, description) {
 function _compareJSON(test, object, filename, description) {
     var actual = object;
     var expected = grunt.file.readJSON('test/expected/' + filename);
-    test.strictEqual(actual, expected, description);
+    test.deepEqual(actual, expected, description);
     test.done();
 }
 
