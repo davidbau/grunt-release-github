@@ -15,6 +15,7 @@ exports.grunt_cmd = {
 
     run_several_tasks: function (test) {
         gruntcmd.runTasks(grunt, ['hello', 'hello']).then(function () {
+            test.expect(true);
             test.done();
         }, function () {
             test.done(1);
