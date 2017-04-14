@@ -163,7 +163,7 @@ module.exports = function (grunt) {
             }).then(function () {
                 grunt.log.ok('RUN afterRelease tasks');
                 return gruntCMD.runTasks(grunt, options.afterRelease);
-            }).then(done).catch(function (err) {
+            }).then(function () { rollbackMG.clean(); done(); }).catch(function (err) {
                 //rollback
                 grunt.log.warn('Error: Something was worng. ' + err.toString());
                 rollbackMG.rollback(grunt).then(function () {
