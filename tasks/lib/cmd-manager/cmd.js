@@ -19,9 +19,7 @@ function _run(command, options) {
 
         process.stdout.on('data', function () { });
 
-        process.stderr.on('data', function (data) {
-            // grunt.log.error(data.toString());
-        });
+        process.stderr.on('data', function () { });
 
         process.on('exit', function (code) {
             if (!code) {

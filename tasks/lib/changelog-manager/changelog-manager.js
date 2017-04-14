@@ -2,8 +2,7 @@
 
 var Promise = require('bluebird'),
     grunt = require('grunt'),
-    milestone = require('../services/github-milestone'),
-    logger = require('../logger/logger');
+    milestone = require('../services/github-milestone');
 
 module.exports = {
     updateChangelog: _updateChangelog

@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 
             // file is in charge of master information, ie, it is it which define the base version to work on
             file: grunt.config('pkgFile') || 'package.json',
-            packageObject: 'pkg',
+            packageObject: null,
 
             // additionalFiles are additional files that also need to be bumped
             additionalFiles: [],
@@ -70,7 +70,7 @@ module.exports = function (grunt) {
         var options = merge(userOptions, defaultsOptions);
 
         //if package if null fail;
-        var pkg = grunt.config(options.packageObject);
+        var pkg = options.packageObject ? grunt.config(options.packageObject) : grunt.file.readJSON(options.file);
 
         if (pkg == null) {
             grunt.fail.warn('pkg object NOT FOUND, please see "release.packageObject" option.');
@@ -163,10 +163,13 @@ module.exports = function (grunt) {
             }).then(function () {
                 grunt.log.ok('RUN afterRelease tasks');
                 return gruntCMD.runTasks(grunt, options.afterRelease);
-            }).then(done).catch(function (err) {
+            }).then(function () { rollbackMG.clean(); done(); }).catch(function (err) {
                 //rollback
                 grunt.log.warn('Error: Something was worng. ' + err.toString());
-                rollbackMG.rollback(grunt).then(done, function (err) {
+                rollbackMG.rollback(grunt).then(function () {
+                    rollbackMG.clean();
+                    done();
+                }, function (err) {
                     grunt.fail.warn('Error: Something was worng with rollback: ' + err.toString());
                 });
             });

@@ -8,7 +8,8 @@ module.exports = function (grunt) {
             all: [
                 'Gruntfile.js',
                 'tasks/**/*.js',
-                '<%= nodeunit.tests %>'
+                '<%= nodeunit.test %>',
+                '<%= nodeunit.cmd_test %>'
             ],
             options: {
                 jshintrc: '.jshintrc'
@@ -18,12 +19,12 @@ module.exports = function (grunt) {
             test: 'test/fixtures/_*.{json,md}'
         },
         nodeunit: {
-            tests: ['test/*.test.js', 'test/lib/**/*.test.js'],
-            libTests: 'test/lib/**/*.test.js',
-            gruntCmd: 'test/lib/grunt-cmd.test.js'
+            test: ['test/milestone.test.js', 'test/release.test.js', 'test/lib/services/**/*.test.js'],
+            cmd_test: ['test/lib/cmd/**/*.test.js']
         },
         release: {
             options: {
+                packageObject: 'pkg',
                 changelog: true,
                 changelogFromGithub: true,
                 githubReleaseBody: 'See [CHANGELOG.md](./CHANGELOG.md) for details.',
@@ -134,7 +135,7 @@ module.exports = function (grunt) {
         'clean',
         'setup',
         'releaseTest',
-        'nodeunit',
+        'nodeunit:test',
         'clean'
     ]);
 

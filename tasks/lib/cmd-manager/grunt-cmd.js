@@ -14,9 +14,10 @@ function _runTask(grunt, task) {
     }
 
     if (typeof task === 'string') {
-        return run('grunt', [task].concat(args));
+        return run('grunt', [task]);
     } else {
-        grunt.fail.warn('Fail while ' + task + ' was executing.');
+        return run('grunt', [task.name].concat(args));
+        //grunt.fail.warn('Fail while ' + task + ' was executing.');
     }
 }
 
