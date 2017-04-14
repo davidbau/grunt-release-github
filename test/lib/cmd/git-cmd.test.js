@@ -1,7 +1,7 @@
 'use strict';
 
-var gitCMD = require('../../tasks/lib/cmd-manager/git-cmd'),
-    rollbackManager = require('../../tasks/lib/rollback-manager/rollback-manager');
+var gitCMD = require('../../../tasks/lib/cmd-manager/git-cmd'),
+    rollbackManager = require('../../../tasks/lib/rollback-manager/rollback-manager');
 
 var grunt = require('grunt');
 var version = '0.0.0-' + Math.random();

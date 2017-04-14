@@ -11,6 +11,8 @@ var options = {
     }
 };
 
+var expectedText = '### v0.0.0 - {{now}}\n\n- [#10](https://github.com/dani8art/grunt-release-github/issues/10) - Issue for testing module 03\n\n- [#9](https://github.com/dani8art/grunt-release-github/issues/9) - Issue for testing module 02\n\n- [#8](https://github.com/dani8art/grunt-release-github/issues/8) - Issue for testing module 01\n\n* Test Entry\r\n';
+
 exports.milestone = {
     getMilestoneText: function (test) {
         milestone.getMilestoneText(options, '0.0.0').then(function (changelogText) {
@@ -27,7 +29,7 @@ exports.milestone = {
             var date = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
 
             var actual = grunt.file.read('test/fixtures/_' + filename);
-            var expected = grunt.file.read('test/expected/' + filename);
+            var expected = expectedText;
 
             test.strictEqual(actual, expected.replace("{{now}}", date), description);
             test.done();
