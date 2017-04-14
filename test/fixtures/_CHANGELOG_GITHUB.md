@@ -1,4 +1,4 @@
-### v0.0.0 - 2017-04-13
+### v0.0.0 - 2017-04-14
 
 - [#10](https://github.com/dani8art/grunt-release-github/issues/10) - Issue for testing module 03
 
