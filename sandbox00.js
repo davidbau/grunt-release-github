@@ -7,6 +7,7 @@ var gruntcmd = new GruntManager(grunt);
 console.log('INIT');
 gruntcmd.runTasks(['hello', 'hello']).then(() => {
     console.log('END');
+
 }, () => {
     console.log('ERROR END');
 });
