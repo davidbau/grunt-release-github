@@ -63,8 +63,8 @@ function _rollback(grunt) {
         Promise.each(actions, function (action) {
             return rollbackManager['rollback_' + action](grunt, rollbackData[action]);
         }).then(function () {
-            doneSteps = [];
-            rollbackData = {};
+            _clean();
+            resolve();
         }, reject);
     });
 }
