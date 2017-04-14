@@ -1,6 +1,7 @@
 'use strict';
 
 var githubServiceModule = require('../../../tasks/lib/services/github-service.js'),
+    grunt = require('grunt'),
     utils = require('../../utils/testsutils.js');
 
 var compareJSON = utils.compareJSON;
@@ -14,6 +15,7 @@ var credentialsMock = {
 exports.githubService = {
     getMilestones: function (test) {
         githubServiceModule.getMilestoneByVersion(credentialsMock, credentialsMock.repo, '0.0.0').then(function (milestones) {
+            grunt.file.write('test/expected/' + "getMilestoneByVersion.json", JSON.stringify(milestones, null, 2));
             compareJSON(test, milestones, "getMilestoneByVersion.json", "should be equal.");
         }, function (error) {
             test.expect(false);
@@ -22,6 +24,7 @@ exports.githubService = {
     },
     getIssuesByMilestone: function (test) {
         githubServiceModule.getIssuesByMilestone(credentialsMock, credentialsMock.repo, 2).then(function (issues) {
+            grunt.file.write('test/expected/' + "getIssuesByMilestone.json", JSON.stringify(issues, null, 2));
             compareJSON(test, issues, "getIssuesByMilestone.json", "should be equal.");
         }, function (error) {
             test.expect(false);
