@@ -1,10 +1,9 @@
-/*
- * grunt-release
- * https://github.com/geddski/grunt-release
- *
- * Copyright (c) 2013 Dave Geddes
- * Licensed under the MIT license.
- */
+/*!
+grunt-release-github 1.0.4, built on: 2017-08-01
+Copyright (C) 2017 Daniel Arteaga
+http://darteaga.com
+https://github.com/dani8art/grunt-release-github*/
+
 
 'use strict';
 var merge = require("set-options"),

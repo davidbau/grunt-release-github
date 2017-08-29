@@ -1,7 +1,9 @@
 {
   "name": "grunt-release-github",
+  "buildOn": "2017-08-01",
   "version": "1.0.4",
-  "description": "Release a new version of your Node-based project",
+  "description": "NPM module to manage Node JS applications releasing, using milestones and issues from Github.",
+  "homepage": "https://github.com/dani8art/grunt-release-github",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "grunt test"
@@ -11,16 +13,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dani8art/grunt-release-github.git"
+    "url": "https://github.com/dani8art/grunt-release-github.git",
+    "github": "http://github.com/dani8art/grunt-release-github"
+  },
+  "bugs": {
+    "url": "https://github.com/dani8art/grunt-release-github/issues"
   },
   "keywords": [
     "gruntplugin",
-    "bump",
-    "release",
     "npm",
-    "git"
+    "release",
+    "github",
+    "milestones",
+    "issues"
   ],
-  "author": "Daniel Arteaga",
+  "author": {
+    "name": "Daniel Arteaga",
+    "web": "http://darteaga.com"
+  },
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.4.7",
@@ -32,9 +42,11 @@
   },
   "devDependencies": {
     "grunt": "^1.0.1",
+    "grunt-banner": "^0.6.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-nodeunit": "^1.0.0"
+    "grunt-contrib-nodeunit": "^1.0.0",
+    "nodeunit": "^0.11.1"
   },
   "peerDependencies": {
     "grunt": ">=1.0.1"
