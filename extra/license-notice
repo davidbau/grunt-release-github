@@ -1,0 +1,4 @@
+<%= pkg.name %> <%= pkg.version %>, built on: <%= pkg.buildOn %>
+Copyright (C) <%= pkg.buildOn.split('-')[0] %> <%= pkg.author.name %>
+<%= pkg.author.web %>
+<%= pkg.homepage %>
