@@ -67,6 +67,7 @@ The following are all the release steps, you can disable any you need to:
       changelogText: '<%= version %>\n', //default: '### <%= version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n'
       changelogFromGithub: true, //default false
       file: 'package.json', //default: package.json
+      packageObject: 'pkg',
       add: true, //default: true
       commit: true, //default: true
       tag: true, //default: true
@@ -99,6 +100,7 @@ The following are all the release steps, you can disable any you need to:
 - **changelogText**, text for adding to the changelog. This option will be suppressed by the list of issues from a milestone if the `changelogFromGithub` option is `true`.
 - **changelogFromGithub**, `true` if you want to get the changelog from a GitHub milestone.
 - **file**, the file where the version number will be bumped.
+- **packageObject**, the object where the version number will be bumped.
 - **add**, `true` if you want to stage the changes of the files that were updated.
 - **commit**, `true` if you want to commint the changes that were updated.
 - **tag**, `true` if you want to create a tag.

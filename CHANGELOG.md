@@ -1,3 +1,29 @@
+### v2.0.0 - 2017-08-30
+
+- [#42](https://github.com/dani8art/grunt-release-github/issues/42) - Remove sandbox00.js
+
+- [#40](https://github.com/dani8art/grunt-release-github/issues/40) - Add CI files and modify Gruntfile
+
+- [#39](https://github.com/dani8art/grunt-release-github/issues/39) - Update tests
+
+- [#38](https://github.com/dani8art/grunt-release-github/issues/38) - Rewrite documentation
+
+- [#34](https://github.com/dani8art/grunt-release-github/issues/34) - Create library with method that return promise
+
+- [#33](https://github.com/dani8art/grunt-release-github/issues/33) - Change Promise library to "Bluebird"
+
+- [#32](https://github.com/dani8art/grunt-release-github/issues/32) - Error if it is not logged on npm 
+
+- [#31](https://github.com/dani8art/grunt-release-github/issues/31) - Do anything if there is not milestone for releasing
+
+- [#30](https://github.com/dani8art/grunt-release-github/issues/30) - beforeBump does't execute tasks
+
+- [#29](https://github.com/dani8art/grunt-release-github/issues/29) - Give solution if there are not issues for the given milestone 
+
+- [#28](https://github.com/dani8art/grunt-release-github/issues/28) - revert changes if there are any error
+
+- [#25](https://github.com/dani8art/grunt-release-github/issues/25) - separate repository var from username
+
 ### v1.0.4 - 2017-01-23
 
 - [#25](https://github.com/dani8art/grunt-release-github/issues/25) - separate repository var from username

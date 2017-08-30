@@ -16,8 +16,8 @@ For usage instructions please read [documentation](http://github.com/dani8art/gr
 
 [![Build Status](https://travis-ci.org/dani8art/grunt-release-github.svg?branch=master)](https://travis-ci.org/http://github.com/dani8art/grunt-release-github)
 
-The version 1.0.4 is the latest stable version of grunt-release-github component.
-see [release note](http://github.com/dani8art/grunt-release-github/releases/tag/1.0.4) for details.
+The version 2.0.0 is the latest stable version of grunt-release-github component.
+see [release note](http://github.com/dani8art/grunt-release-github/releases/tag/2.0.0) for details.
 
-- Download latest version from [1.0.4](http://github.com/dani8art/grunt-release-github/releases/tag/1.0.4)
+- Download latest version from [2.0.0](http://github.com/dani8art/grunt-release-github/releases/tag/2.0.0)
 - For usage instructions please read [documentation](http://github.com/dani8art/grunt-release-github/tree/master/docs)

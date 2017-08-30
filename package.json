@@ -1,7 +1,7 @@
 {
   "name": "grunt-release-github",
   "buildOn": "2017-08-01",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "NPM module to manage Node JS applications releasing, using milestones and issues from Github.",
   "homepage": "https://github.com/dani8art/grunt-release-github",
   "main": "Gruntfile.js",
